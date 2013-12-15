@@ -1,6 +1,7 @@
 // alert("background.js called");
 
 var cookieLog = [];  // TODO restrain size
+var cookieCounter = 0;
 
 function onCookieChanged(changeInfo){
 
@@ -34,6 +35,9 @@ function onCookieChanged(changeInfo){
 
 	// in case a popup is already open and needs to update its view
 	chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent}, null);
+
+	cookieCounter += 1;
+	updateCounter(cookieCounter);
 };
 
 // watch for every cookie event
@@ -47,4 +51,20 @@ chrome.runtime.onMessage.addListener(function(msg, sender, respondFunction){
 	if ( msg.action && msg.action === "sendList" ){
 		respondFunction(cookieLog);
 	}
-})
+});
+
+
+//
+// use badge text to display a cookie counter
+// 
+
+function updateCounter(value){
+	var badgeText = "";
+	if (value && value >= 0){
+		badgeText = "" + value;
+	}
+	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
+}
+chrome.browserAction.setBadgeBackgroundColor( {color: "#ff0000"} );	
+updateCounter(0);
+
