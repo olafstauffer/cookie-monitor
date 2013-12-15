@@ -1,0 +1,88 @@
+body {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+#popup {
+	min-width: 600px;
+	width: 600px;
+	min-height: 10px;
+	height: 500px;
+	margin: 12px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.red {
+	background-color: red;
+	color: white;
+}
+
+
+.cookieTable {
+	border: 1px solid rgb(212, 212,212);
+	width: 600px;
+	height: 400px;
+	float: top;
+}
+
+
+/*
+Modifications to ng-grid.css to allow 
+line breaks in table header  
+*/
+.ngHeaderText {
+	/*padding: 5px;*/
+	font-size: small;
+	text-align: center;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	white-space: normal;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.cookieTableCell {
+	text-align: center;
+}
+
+.cookieDetails{
+    /*float: left;*/
+    /*margin-top: 10px;*/
+    float: bottom;
+    overflow-x: scroll; 
+}
+
+.detailElement {
+    border-top: 1px solid rgb(212, 212, 212); 
+    margin: 5px;
+}
+
+.detailRow {
+	white-space: nowrap;
+	/*display:inline;*/
+}
+
+.detailTitle {
+	/*display: inline-block;*/
+	font-size: small;
+	font-variant: small-caps;
+	margin-right: 5px
+}
+
+.detailFlags {
+	display: inline;
+	float: right;
+}
+
+.detailValue {
+	font-size: small;
+	padding-right: 5px;
+	/*background-color: rgb(240, 240, 240);*/
+	/*font-style: italic;*/
+	/*border: 1px solid;*/
+}

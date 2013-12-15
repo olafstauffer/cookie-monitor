@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" ng-app="CookieMonitorApp" ng-csp>
+<head>
+	<title>Cookie Monitor</title>
+	
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/ng-grid.css">
+	<link rel="stylesheet" href="css/angular-csp.css">
+	<link rel="stylesheet" href="css/popup.css">
+	
+	<script src="js/lib/jquery-1.10.2.min.js"></script>
+	<script src="js/lib/angular-1.2.5.min.js"></script>
+	<script src="js/lib/ng-grid-2.0.7.debug.js"></script>
+	<script src="js/lib/jquery-ui-1.10.3.min.js"></script>
+
+	<script src="js/app/app.js"></script>
+	<script src="js/app/popup.js"></script>
+
+</head>
+<body id="popup">
+	<header>
+		<h1>Cookie Monitor</h1>
+	</header>
+
+	<div ng-controller="PageController">
+		<div class="cookieTable" ng-grid="cookieTableConfig"></div>
+		<div class="cookieDetails">
+			<div ng-repeat="selection in mySelections | orderBy:ts">
+				<div class="detailElement">
+					<div class="detailRow">
+						<span class="detailTitle">date:</span><span class="detailValue">{{selection.ts | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
+						<span class="detailTitle">name:</span><span class="detailValue">{{selection.name}}</span>
+						<div class="detailFlags">
+							<span class="detailTitle">secure:</span>{{selection.secure | boolToUtfChar}}
+							<span class="detailTitle">httpOnly:</span>{{selection.httponly | boolToUtfChar}}
+							<span class="detailTitle">hostOnly:</span>{{selection.hostonly | boolToUtfChar}}
+						</div>
+					</div>
+					<div class="detailRow">
+						<span class="detailTitle">domain:</span><span class="detailValue">{{selection.domain}}</span>
+						<span class="detailTitle">path:</span><span class="detailValue">{{selection.path}}</span>						
+					</div>
+					<div class="detailRow">
+						<span class="detailTitle">expiration</span><span class="detailValue">{{selection.expiration | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
+						<span class="detailTitle">days remaining:</span><span class="detailValue">{{(selection.expiration - selection.ts)/1000/60/60/24 | number:0}}</span>
+						<span class="detailTitle">action:</span><span class="detailValue">{{selection.action}}</span>
+					</div>
+					<div class="detailRow">
+						<span class="detailTitle">value:</span><span class="detailValue">¡{{selection.value}}</span>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+
+</body>
+</html>
