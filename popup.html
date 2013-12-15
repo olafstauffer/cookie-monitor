@@ -23,6 +23,7 @@
 	</header>
 
 	<div ng-controller="PageController">
+		<div><button ng-click="clearSelection()">Clear Selection</button></div>
 		<div class="cookieTable" ng-grid="cookieTableConfig"></div>
 		<div class="cookieDetails">
 			<div ng-repeat="selection in mySelections | orderBy:ts">
