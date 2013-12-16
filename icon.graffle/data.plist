@@ -55,13 +55,13 @@
 	<array>
 		<dict>
 			<key>Bounds</key>
-			<string>{{61, 54}, {64, 64}}</string>
+			<string>{{50, 49}, {72, 72}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>3</integer>
+			<integer>8</integer>
 			<key>ImageID</key>
-			<integer>1</integer>
+			<integer>6</integer>
 			<key>Shape</key>
 			<string>Rectangle</string>
 			<key>Style</key>
@@ -85,13 +85,13 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{4, 3}, {107, 107}}</string>
+			<string>{{4, 7}, {98, 98}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>8</integer>
+			<integer>3</integer>
 			<key>ImageID</key>
-			<integer>6</integer>
+			<integer>1</integer>
 			<key>Shape</key>
 			<string>Rectangle</string>
 			<key>Style</key>
@@ -182,7 +182,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-12-15 16:14:22 +0000</string>
+	<string>2013-12-16 11:27:23 +0000</string>
 	<key>Modifier</key>
 	<string>Olaf Stauffer</string>
 	<key>NotesVisible</key>
@@ -272,7 +272,7 @@
 		<key>SidebarWidth</key>
 		<integer>119</integer>
 		<key>VisibleRegion</key>
-		<string>{{-22, -17}, {172.28915596663555, 162.65060178668395}}</string>
+		<string>{{-22, -17}, {172.28915596663558, 162.65060178668395}}</string>
 		<key>Zoom</key>
 		<real>4.9800000190734863</real>
 		<key>ZoomValues</key>

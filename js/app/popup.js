@@ -36,6 +36,7 @@ myApp.controller("PageController", function($scope, cookieEventService){
 			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate}, 
 			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate}
 		],
+		sortInfo: {fields: ['ts'], directions: ['desc']},
 		showGroupPanel: true,
         jqueryUIDraggable: true,
         enableColumnResize: true,
