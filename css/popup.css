@@ -3,8 +3,8 @@ body {
 }
 
 #popup {
-	min-width: 600px;
-	width: 600px;
+	min-width: 650px;
+	width: 650px;
 	min-height: 10px;
 	height: 500px;
 	margin: 12px;
@@ -22,7 +22,7 @@ body {
 
 .cookieTable {
 	border: 1px solid rgb(212, 212,212);
-	width: 600px;
+	width: 650px;
 	height: 400px;
 	float: top;
 }

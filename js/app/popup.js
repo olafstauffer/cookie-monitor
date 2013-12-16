@@ -30,8 +30,8 @@ myApp.controller("PageController", function($scope, cookieEventService){
 		columnDefs: [
 			{field: 'ts', displayName: 'Time', cellFilter: "date:'HH:mm:ss.sss'", width: 105},
 			{field: 'name', displayName: 'Name', width:100},
-			{field: 'domain', displayName: 'Domain'},
-			{field: 'path', displayName: 'Path', width: 60},
+			{field: 'domain', displayName: 'Domain', width: 150},
+			{field: 'page', displayName: 'Page Guess'},
 			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate}, 
 			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate}, 
 			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate}
