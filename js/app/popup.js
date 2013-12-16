@@ -32,6 +32,8 @@ myApp.controller("PageController", function($scope, cookieEventService){
 
 	$scope.cookieLog = [];
 
+	var boolCellTemplate = '<div class=\"ngCellText cookieTableCell\" ng-class=\"col.colIndex()\">{{row.entity[col.field] == "true" ? "&#x2611;" : "&#x2610;"}}</div>';
+
 	$scope.mySelections = [];
 	$scope.cookieTableConfig = { 
 		data: 'cookieLog',
@@ -40,9 +42,9 @@ myApp.controller("PageController", function($scope, cookieEventService){
 			{field: 'name', displayName: 'Name', width:100},
 			{field: 'domain', displayName: 'Domain'},
 			{field: 'path', displayName: 'Path', width: 60},
-			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellClass: 'cookieTableCell'}, 
-			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellClass: 'cookieTableCell'}, 
-			{field: 'hostonly', displayName: 'Host Only', width: 50, cellClass: 'cookieTableCell'}
+			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate}, 
+			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate}, 
+			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate}
 		],
 		showGroupPanel: true,
         jqueryUIDraggable: true,

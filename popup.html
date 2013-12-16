@@ -23,9 +23,11 @@
 	</header>
 
 	<div ng-controller="PageController">
-		<div><button ng-click="clearSelection()">Clear Selection</button></div>
-		<div><button ng-click="clearCookieLog()">Clear Cookie Log</button></div>
 		<div class="cookieTable" ng-grid="cookieTableConfig"></div>
+		<div>
+			<button ng-click="clearSelection()">Clear Selection</button>
+			<button ng-click="clearCookieLog()">Clear Cookie Log</button>
+		</div>
 		<div class="cookieDetails">
 			<div ng-repeat="selection in mySelections | orderBy:ts">
 				<div class="detailElement">
@@ -33,9 +35,12 @@
 						<span class="detailTitle">date:</span><span class="detailValue">{{selection.ts | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
 						<span class="detailTitle">name:</span><span class="detailValue">{{selection.name}}</span>
 						<div class="detailFlags">
-							<span class="detailTitle">secure:</span><span class="detailValue">{{selection.secure}}</span>
-							<span class="detailTitle">httpOnly:</span><span class="detailValue">{{selection.httponly}}</span>
-							<span class="detailTitle">hostOnly:</span><span class="detailValue">{{selection.hostonly}}</span>
+							<span class="detailTitle">secure:</span>
+							{{selection.secure == "true" ? "&#x2611;" : "&#x2610;"}}
+							<span class="detailTitle">httpOnly:</span>
+							{{selection.httponly == "true" ? "&#x2611;" : "&#x2610;"}}
+							<span class="detailTitle">hostOnly:</span>
+							{{selection.hostonly == "true" ? "&#x2611;" : "&#x2610;"}}
 						</div>
 					</div>
 					<div class="detailRow">
