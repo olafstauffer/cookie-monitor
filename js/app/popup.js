@@ -16,17 +16,7 @@ myApp.service("cookieEventService", function(){
 
 });
 
-myApp.filter('boolToUtfChar', function(){
-	return function(input){
-		if(input){
-			// return "&#x2610;";
-			return "☑";
-		} else {
-			// return "&#x2611;";
-			return "☐";
-		}
-	}
-});
+
 
 myApp.controller("PageController", function($scope, cookieEventService){
 
