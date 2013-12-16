@@ -1,12 +1,18 @@
 myApp.service("cookieEventService", function(){
 
 	this.getCookieLog = function(callback){
-
 		chrome.runtime.sendMessage(null, {'action': 'sendList'}, function(response){
-			console.log("sendList responded with:"+response);
 			callback(response);
 		})
 	};
+
+	this.clearCookieLog = function(callback){
+		console.log("clear cookie log service reached");
+		chrome.runtime.sendMessage(null, {'action': 'clearList'}, function(response){
+			console.log("response="+response);
+			callback(response);
+		})
+	}
 
 });
 
@@ -54,7 +60,7 @@ myApp.controller("PageController", function($scope, cookieEventService){
 	});
 
 	// add a table row every time a cookie event is found
-	chrome.runtime.onMessage.addListener(function(msg, sender, respondFunction){
+	chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 		if ( msg.action && msg.action === "add" ){
 			$scope.cookieLog.push(msg.event);
 			$scope.$apply();
@@ -68,6 +74,13 @@ myApp.controller("PageController", function($scope, cookieEventService){
         });
     };
 
+    $scope.clearCookieLog = function(){
+    	$scope.clearSelection();
+    	cookieEventService.clearCookieLog(function(cookieLog){
+    		$scope.cookieLog = cookieLog;
+    		$scope.$apply();
+    	})
+    }
 
 });
 

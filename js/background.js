@@ -40,19 +40,6 @@ function onCookieChanged(changeInfo){
 	updateCounter(cookieCounter);
 };
 
-// watch for every cookie event
-// TODO make this on demand
-chrome.cookies.onChanged.addListener(onCookieChanged);
-
-
-chrome.runtime.onMessage.addListener(function(msg, sender, respondFunction){
-	console.log("incoming message to background.js");
-	console.log(msg);
-	if ( msg.action && msg.action === "sendList" ){
-		respondFunction(cookieLog);
-	}
-});
-
 
 //
 // use badge text to display a cookie counter
@@ -67,4 +54,26 @@ function updateCounter(value){
 }
 chrome.browserAction.setBadgeBackgroundColor( {color: "#ff0000"} );	
 updateCounter(0);
+
+
+
+// watch for every cookie event
+// TODO make this on demand
+chrome.cookies.onChanged.addListener(onCookieChanged);
+
+
+chrome.runtime.onMessage.addListener(function(msg, sender, callback){
+	console.log(msg);
+	if ( msg.action && msg.action === "sendList" ){
+		callback(cookieLog);
+	} else if ( msg.action && msg.action === "clearList" ){
+		while (cookieLog.length > 0) {
+    		cookieLog.pop();
+  		};
+  		updateCounter(0);
+  		callback(cookieLog);
+	}
+});
+
+
 
