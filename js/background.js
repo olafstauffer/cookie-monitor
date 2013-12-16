@@ -26,9 +26,9 @@ function onCookieChanged(changeInfo){
 		'value': changeInfo.cookie.value,
 		'action': changeInfo.cause,
 		'expiration': expirationTS,
-		'hostonly': changeInfo.cookie.hostOnly,
-		'secure': changeInfo.cookie.secure,
-		'httponly': changeInfo.cookie.httpOnly
+		'hostonly': changeInfo.cookie.hostOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
+		'secure': changeInfo.cookie.secure ? 'true' : 'false',  // grouping in ng-grid does not like booleans
+		'httponly': changeInfo.cookie.httpOnly ? 'true' : 'false'  // grouping in ng-grid does not like booleans
 	};
 	console.log(cookieEvent);
 	cookieLog.push(cookieEvent);

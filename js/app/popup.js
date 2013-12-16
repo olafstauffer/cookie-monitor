@@ -36,13 +36,13 @@ myApp.controller("PageController", function($scope, cookieEventService){
 	$scope.cookieTableConfig = { 
 		data: 'cookieLog',
 		columnDefs: [
-			{field: 'ts', displayName: 'Time', cellFilter: "date:'H:mm:ss.sss'", width: 105},
+			{field: 'ts', displayName: 'Time', cellFilter: "date:'HH:mm:ss.sss'", width: 105},
 			{field: 'name', displayName: 'Name', width:100},
 			{field: 'domain', displayName: 'Domain'},
 			{field: 'path', displayName: 'Path', width: 60},
-			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellClass: 'cookieTableCell', cellFilter: 'boolToUtfChar'}, 
-			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellClass: 'cookieTableCell', cellFilter: 'boolToUtfChar'}, 
-			{field: 'hostonly', displayName: 'Host Only', width: 50, cellClass: 'cookieTableCell', cellFilter: 'boolToUtfChar'}
+			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellClass: 'cookieTableCell'}, 
+			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellClass: 'cookieTableCell'}, 
+			{field: 'hostonly', displayName: 'Host Only', width: 50, cellClass: 'cookieTableCell'}
 		],
 		showGroupPanel: true,
         jqueryUIDraggable: true,
