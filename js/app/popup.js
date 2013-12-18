@@ -22,7 +22,17 @@ myApp.controller("PageController", function($scope, cookieEventService){
 
 	$scope.cookieLog = [];
 
+	// modified cell template to insert checked/uncheck chars instead of "true"/"false"
 	var boolCellTemplate = '<div class=\"ngCellText cookieTableCell\" ng-class=\"col.colIndex()\">{{row.entity[col.field] == "true" ? "&#x2611;" : "&#x2610;"}}</div>';
+
+	// modified row template to call onMouseover with the current row
+	var rowTemplate = "<div ng-mouseover=\"onMouseover(row)\" ng-mouseleave=\"onMouseleave()\" ng-style=\"{ 'cursor': row.cursor }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngCell {{col.cellClass}} \">" +
+    	"	<div class=\"ngVerticalBar\" ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>" +
+    	"	<div ng-cell></div>" +
+    	"</div>"
+
+    $scope.currentCookie = {};
+
 
 	$scope.mySelections = [];
 	$scope.cookieTableConfig = { 
@@ -44,7 +54,8 @@ myApp.controller("PageController", function($scope, cookieEventService){
         showFilter: true,
         selectedItems: $scope.mySelections,
 	    multiSelect: true,
-	    headerRowHeight: 40
+	    headerRowHeight: 40,
+	    rowTemplate: rowTemplate
 	};
 
 	// fill table when popup is generated
@@ -73,7 +84,33 @@ myApp.controller("PageController", function($scope, cookieEventService){
     		$scope.cookieLog = cookieLog;
     		$scope.$apply();
     	})
+    };
+
+    $scope.onMouseover = function(row){
+    	console.log(row.entity);
+    	$scope.currentCookie = row.entity;
+    	// $scope.$apply();
+    	console.log("currentCookie:");
+    	console.log($scope.currentCookie);
     }
+
+    $scope.onMouseleave = function(){
+    	console.log("mouse leave");
+    	$scope.currentCookie = {};
+    	// $scope.$apply();
+    	console.log("currentCookie:");
+    	console.log($scope.currentCookie);
+
+    };
+
+    // TODO import underscore
+    $scope.isEmpty = function(object) {
+	    for(var prop in object) {
+	        if(object.hasOwnProperty(prop))
+	            return false;
+	    }
+	    return true;
+	}
 
 });
 

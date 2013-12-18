@@ -23,10 +23,44 @@
 	</header>
 
 	<div ng-controller="PageController">
+		<!-- <div class="cookieTable" ng-grid="cookieTableConfig" ng-mouseover="mouseover($event)"></div> -->
 		<div class="cookieTable" ng-grid="cookieTableConfig"></div>
 		<div>
 			<button ng-click="clearSelection()">Clear Selection</button>
 			<button ng-click="clearCookieLog()">Clear Cookie Log</button>
+		</div>
+
+		<!-- TODO: refactor -->
+		<div class="currentCookie" ng-show="!isEmpty(currentCookie)">
+			<div class="detailRow">
+				<span class="detailTitle">date:</span><span class="detailValue">{{currentCookie.ts | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
+				<span class="detailTitle">name:</span><span class="detailValue">{{currentCookie.name}}</span>
+				<div class="detailFlags">
+					<span class="detailTitle">secure:</span>
+					{{currentCookie.secure == "true" ? "&#x2611;" : "&#x2610;"}}
+					<span class="detailTitle">httpOnly:</span>
+					{{currentCookie.httponly == "true" ? "&#x2611;" : "&#x2610;"}}
+					<span class="detailTitle">hostOnly:</span>
+					{{currentCookie.hostonly == "true" ? "&#x2611;" : "&#x2610;"}}
+				</div>
+			</div>
+			<div class="detailRow">
+				<span class="detailTitle">domain:</span><span class="detailValue">{{currentCookie.domain}}</span>
+				<span class="detailTitle">path:</span><span class="detailValue">{{currentCookie.path}}</span>
+				<span class="detailTitle">page:</span><span class="detailValue">{{currentCookie.page}}</span>
+			</div>
+			<div class="detailRow">
+				<span class="detailTitle">expiration</span><span class="detailValue">{{currentCookie.expiration | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
+				<span class="detailTitle">days remaining:</span><span class="detailValue">{{(currentCookie.expiration - currentCookie.ts)/1000/60/60/24 | number:0}}</span>
+				<span class="detailTitle">action:</span><span class="detailValue">{{currentCookie.action}}</span>
+			</div>
+			<div class="detailRow">
+				<span class="detailTitle">value:</span><span class="detailValue">{{currentCookie.value}}</span>
+			</div>
+
+
+
+
 		</div>
 		<div class="cookieDetails">
 			<div ng-repeat="selection in mySelections | orderBy:ts">

@@ -55,6 +55,8 @@ line breaks in table header
     /*margin-top: 10px;*/
     float: bottom;
     overflow-x: scroll; 
+    background-color: rgba(201, 221, 225, 0.5);
+
 }
 
 .detailElement {
@@ -82,7 +84,10 @@ line breaks in table header
 .detailValue {
 	font-size: small;
 	padding-right: 5px;
-	/*background-color: rgb(240, 240, 240);*/
 	/*font-style: italic;*/
 	/*border: 1px solid;*/
+}
+
+.currentCookie {
+	background-color: rgba(255, 228, 181, 0.3);
 }
