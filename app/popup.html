@@ -4,14 +4,15 @@
 	<title>Cookie Monitor</title>
 	
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css">
+	<!-- bower:css -->
+	<link rel="stylesheet" href="/bower_components/ng-grid/ng-grid.min.css" />
+	<!-- endbower -->
+
+	<!-- grunt task bower-install does not get the following -->
 	<link rel="stylesheet" href="bower_components/angular/angular-csp.css">
+
 	<link rel="stylesheet" href="styles/popup.css">
 	
-	<script src="bower_components/jquery/jquery.min.js"></script>
-	<script src="bower_components/angular/angular.min.js"></script>
-	<script src="bower_components/ng-grid/ng-grid-2.0.7.debug.js"></script>
-	<script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 
 </head>
 <body id="popup">
@@ -92,6 +93,12 @@
 		</div>	
 	</div>
 
+	<!-- bower:js -->
+	<script src="/bower_components/jquery/jquery.js"></script>
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="/bower_components/jquery-ui/ui/jquery-ui.js"></script>
+	<script src="/bower_components/ng-grid/build/ng-grid.min.js"></script>
+	<!-- endbower -->
 
 	<script src="scripts/app.js"></script>
 	<script src="scripts/popup.js"></script>
