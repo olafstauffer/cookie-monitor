@@ -1,0 +1,11 @@
+{
+  "name": "cookie-monitor",
+  "version": "0.2.0",
+  "dependencies": {
+    "angular": "1.2.5",
+    "jquery": "1.10.2",
+    "jquery-ui": "1.10.3",
+    "ng-grid": "2.0.7"
+  },
+  "devDependencies": {}
+}

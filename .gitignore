@@ -1,0 +1,8 @@
+.DS_Store
+cookie-monitor.sublime-project
+cookie-monitor.sublime-workspace
+node_modules
+app/bower_components
+test/bower_components
+dist
+package
