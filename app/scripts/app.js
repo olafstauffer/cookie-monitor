@@ -1,2 +1,4 @@
-var myApp = angular.module('CookieMonitorApp', ['ngGrid']);
+'use strict';
+/* jshint unused: false */
+var cookieMonitorApp = angular.module('CookieMonitorApp', ['ngGrid']);
 

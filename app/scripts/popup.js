@@ -1,24 +1,27 @@
-myApp.service("cookieEventService", function(){
+'use strict';
+
+/* global cookieMonitorApp */
+cookieMonitorApp.service('cookieEventService', function(){
 
 	this.getCookieLog = function(callback){
 		chrome.runtime.sendMessage(null, {'action': 'sendList'}, function(response){
 			callback(response);
-		})
+		});
 	};
 
 	this.clearCookieLog = function(callback){
-		console.log("clear cookie log service reached");
+		console.log('clear cookie log service reached');
 		chrome.runtime.sendMessage(null, {'action': 'clearList'}, function(response){
-			console.log("response="+response);
+			console.log('response='+response);
 			callback(response);
-		})
-	}
+		});
+	};
 
 });
 
 
 
-myApp.controller("PageController", function($scope, cookieEventService){
+cookieMonitorApp.controller('PageController', function($scope, cookieEventService){
 
 	$scope.cookieLog = [];
 
@@ -26,24 +29,24 @@ myApp.controller("PageController", function($scope, cookieEventService){
 	var boolCellTemplate = '<div class=\"ngCellText cookieTableCell\" ng-class=\"col.colIndex()\">{{row.entity[col.field] == "true" ? "&#x2611;" : "&#x2610;"}}</div>';
 
 	// modified row template to call onMouseover with the current row
-	var rowTemplate = "<div ng-mouseover=\"onMouseover(row)\" ng-mouseleave=\"onMouseleave()\" ng-style=\"{ 'cursor': row.cursor }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngCell {{col.cellClass}} \">" +
-    	"	<div class=\"ngVerticalBar\" ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>" +
-    	"	<div ng-cell></div>" +
-    	"</div>"
+	var rowTemplate = '<div ng-mouseover=\"onMouseover(row)\" ng-mouseleave=\"onMouseleave()\" ng-style=\"{ \'cursor\': row.cursor }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngCell {{col.cellClass}} \">' +
+		'	<div class=\"ngVerticalBar\" ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>' +
+		'	<div ng-cell></div>' +
+		'</div>';
 
     $scope.currentCookie = {};
 
 
 	$scope.mySelections = [];
-	$scope.cookieTableConfig = { 
+	$scope.cookieTableConfig = {
 		data: 'cookieLog',
 		columnDefs: [
-			{field: 'ts', displayName: 'Time', cellFilter: "date:'HH:mm:ss.sss'", width: 105},
+			{field: 'ts', displayName: 'Time', cellFilter: 'date:"HH:mm:ss.sss"', width: 105},
 			{field: 'name', displayName: 'Name', width:100},
 			{field: 'domain', displayName: 'Domain', width: 150},
 			{field: 'page', displayName: 'Page Guess'},
-			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate}, 
-			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate}, 
+			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate},
+			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate},
 			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate}
 		],
 		sortInfo: {fields: ['ts'], directions: ['desc']},
@@ -63,9 +66,10 @@ myApp.controller("PageController", function($scope, cookieEventService){
 		$scope.cookieLog = cookieLog;
 	});
 
-	// add a table row every time a cookie event is found
+	// add a table row every time a cookie event is found 
+	/* jshint unused: false */
 	chrome.runtime.onMessage.addListener(function(msg, sender, callback){
-		if ( msg.action && msg.action === "add" ){
+		if ( msg.action && msg.action === 'add' ){
 			$scope.cookieLog.push(msg.event);
 			$scope.$apply();
 		}
@@ -74,44 +78,43 @@ myApp.controller("PageController", function($scope, cookieEventService){
 
 	$scope.clearSelection = function(){
         angular.forEach($scope.cookieLog, function(data, index){
-        	$scope.cookieTableConfig.selectItem(index, false);
+			$scope.cookieTableConfig.selectItem(index, false);
         });
     };
 
     $scope.clearCookieLog = function(){
-    	$scope.clearSelection();
-    	cookieEventService.clearCookieLog(function(cookieLog){
-    		$scope.cookieLog = cookieLog;
-    		$scope.$apply();
-    	})
+		$scope.clearSelection();
+		cookieEventService.clearCookieLog(function(cookieLog){
+			$scope.cookieLog = cookieLog;
+			$scope.$apply();
+		});
     };
 
-    $scope.onMouseover = function(row){
-    	console.log(row.entity);
-    	$scope.currentCookie = row.entity;
-    	// $scope.$apply();
-    	console.log("currentCookie:");
-    	console.log($scope.currentCookie);
-    }
-
-    $scope.onMouseleave = function(){
-    	console.log("mouse leave");
-    	$scope.currentCookie = {};
-    	// $scope.$apply();
-    	console.log("currentCookie:");
-    	console.log($scope.currentCookie);
-
+	$scope.onMouseover = function(row){
+		console.log(row.entity);
+		$scope.currentCookie = row.entity;
+		// $scope.$apply();
+		console.log('currentCookie:');
+		console.log($scope.currentCookie);
     };
 
-    // TODO import underscore
-    $scope.isEmpty = function(object) {
-	    for(var prop in object) {
-	        if(object.hasOwnProperty(prop))
-	            return false;
-	    }
-	    return true;
-	}
+	$scope.onMouseleave = function(){
+		console.log('mouse leave');
+		$scope.currentCookie = {};
+		// $scope.$apply();
+		console.log('currentCookie:');
+		console.log($scope.currentCookie);
+	};
 
+	// TODO import underscore
+	$scope.isEmpty = function(object) {
+		for(var prop in object) {
+			if(object.hasOwnProperty(prop)){
+				return false;
+			}
+		}
+		return true;
+	};
 });
 
 

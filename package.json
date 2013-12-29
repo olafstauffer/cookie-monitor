@@ -6,7 +6,8 @@
     "grunt": "~0.4.2",
     "grunt-bower-install": "~0.8.0",
     "load-grunt-tasks": "~0.2.1",
-    "time-grunt": "~0.2.5"
+    "time-grunt": "~0.2.5",
+    "grunt-contrib-jshint": "~0.8.0"
   },
   "engines": {
     "node": ">=0.8.0"

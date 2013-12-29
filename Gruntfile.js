@@ -1,9 +1,7 @@
 /*jshint camelcase: false*/
 // Generated on 2013-12-29 using generator-chrome-extension 0.2.5
 'use strict';
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
+
 
 // # Globbing
 // for performance reasons we're only matching one level down:
@@ -31,6 +29,16 @@ module.exports = function (grunt) {
                 ignorePath: '<%= yeoman.app %>'
             }
         },
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
+            all: [
+                'Gruntfile.js',
+                '<%= yeoman.app %>/scripts/{,*/}*.js'
+            ]
+        },
     });
 
     grunt.registerTask('build', [
@@ -38,6 +46,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
+        'jshint',
         'build'
     ]);
 };

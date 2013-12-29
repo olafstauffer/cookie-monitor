@@ -1,26 +1,39 @@
-// alert("background.js called");
+'use strict';
 
 var cookieLog = [];  // TODO restrain size
 var cookieCounter = 0;
 
-function onCookieChanged(changeInfo){
+// use badge text to display a cookie counter
+// 
+function updateCounter(value){
+	var badgeText = '';
+	if (value && value >= 0){
+		badgeText = '' + value;
+	}
+	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
+}
+chrome.browserAction.setBadgeBackgroundColor( {color: '#ff0000'} );
+updateCounter(0);
 
-	console.log(changeInfo);
+// capture every cookie change event and update the log
+//
+function onCookieChanged(changeInfo){
 
 	// we are only interested in a single event per update
 	// (during an update two events: cause:overwrite/removed:true + 
 	// cause:explicit/removed:false are send)
-	if ( changeInfo.cause === 'overwrite' && changeInfo.removed === true) return;
+	if ( changeInfo.cause === 'overwrite' && changeInfo.removed === true){
+		return;
+	}
 
 
 	// get the url of the current page
-	// (note: this is a just a valid guess, because the cookie event cannot 
+	// (note: this is a just a valid guess, because the cookie event cannot
 	// be linked to a originating page directly!)
-	chrome.tabs.query({currentWindow: true, active: true}, function(tab) { 
+	chrome.tabs.query({currentWindow: true, active: true}, function(tab) {
 
 		chrome.tabs.getSelected(tab.windowId, function(tab2) {
 			var currentUrl = tab2.url.split('?').shift().split('#').shift();
-
 
 			var currentTS = new Date().getTime();
 			var expirationTS = null;
@@ -49,48 +62,38 @@ function onCookieChanged(changeInfo){
 
 			cookieCounter += 1;
 			updateCounter(cookieCounter);
-
-
 		});
 
     });
 
-};
-
-
-//
-// use badge text to display a cookie counter
-// 
-
-function updateCounter(value){
-	var badgeText = "";
-	if (value && value >= 0){
-		badgeText = "" + value;
-	}
-	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
 }
-chrome.browserAction.setBadgeBackgroundColor( {color: "#ff0000"} );	
-updateCounter(0);
-
-
-
-// watch for every cookie event
-// TODO make this on demand
 chrome.cookies.onChanged.addListener(onCookieChanged);
 
 
+
+
+// establish communication to popup.js via messages
+//
 chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 	console.log(msg);
-	if ( msg.action && msg.action === "sendList" ){
+	if ( msg.action && msg.action === 'sendList' ){
 		callback(cookieLog);
-	} else if ( msg.action && msg.action === "clearList" ){
+	} else if ( msg.action && msg.action === 'clearList' ){
 		while (cookieLog.length > 0) {
-    		cookieLog.pop();
-  		};
-  		updateCounter(0);
-  		callback(cookieLog);
+			cookieLog.pop();
+		}
+		updateCounter(0);
+		callback(cookieLog);
 	}
 });
+
+
+
+
+
+
+
+
 
 
 
