@@ -1,23 +1,25 @@
 {
-	"name":	"Cookie Monitor",
-	"version":	"0.2.0",
-	"manifest_version":	2,
-
-	"description":	"Display updates to cookies on the page. TODO",
-	"icons": {
-		"128": "images/icon128x128.png"
-	},
-
-	"background":	{
-		"scripts": ["scripts/background.js"],
-		"persistent": true
-	},
-
-	"browser_action": {
-		"default_icon": "images/icon128x128.png",
-		"default_title": "Cookie Monitor",
-		"default_popup": "popup.html"
-	},
-
-	"permissions":	["tabs", "cookies", "*://*/*"]
+    "name": "Cookie Monitor",
+    "version": "0.2.1",
+    "manifest_version": 2,
+    "description": "Display updates to cookies on the page. TODO",
+    "icons": {
+        "128": "images/icon128x128.png"
+    },
+    "background": {
+        "scripts": [
+            "scripts/background.js"
+        ],
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": "images/icon128x128.png",
+        "default_title": "Cookie Monitor",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "cookies",
+        "*://*/*"
+    ]
 }
