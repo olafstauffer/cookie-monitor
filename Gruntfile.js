@@ -37,7 +37,9 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/{,*/}*.js'
+                '<%= yeoman.app %>/scripts/{,*/}*.js',
+                'test/**/*_spec.js',
+                'test/helper.js'
             ]
         },
         clean: {
@@ -150,8 +152,32 @@ module.exports = function (grunt) {
                     dest: ''
                 }]
             }
+        },
+        protractor: {
+            options: {
+                keepAlive: true,
+                noColor: false,
+                args: {
+                    includeStackTrace: true,
+                    verbose: true
+                }
+            },
+            dist: {
+                options: {
+                    configFile: 'test/e2e.conf.dist.js'
+                }
+            },
+            dev: {
+                options: {
+                    configFile: 'test/e2e.conf.dev.js'
+                }
+            }
         }
     });
+
+    grunt.registerTask('test', [
+        'protractor:dist'
+    ]);
 
     grunt.registerTask('build', [
         'bower-install',
