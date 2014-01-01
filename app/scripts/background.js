@@ -3,6 +3,24 @@
 var cookieLog = [];  // TODO restrain size
 var cookieCounter = 0;
 
+/* test-code */
+cookieLog.push({
+	'ts': 12345,
+	'domain': 'example.com',
+	'path': 'path',
+	'name': 'name',
+	'value': 'value',
+	'action': 'action',
+	'expiration': 12345,
+	'hostonly': true,
+	'secure': true,
+	'httponly': true,
+	'page': 'www.example.com'
+});
+/* end-test-code */
+
+
+
 // use badge text to display a cookie counter
 // 
 function updateCounter(value){

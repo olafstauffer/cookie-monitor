@@ -22,7 +22,8 @@
     "chai": "~1.8.1",
     "chai-as-promised": "~4.1.0",
     "grunt-protractor-runner": "~0.2.0",
-    "protractor": "~0.15.0"
+    "protractor": "~0.15.0",
+    "grunt-strip-code": "~0.1.2"
   },
   "engines": {
     "node": ">=0.8.0"

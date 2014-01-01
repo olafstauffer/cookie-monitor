@@ -116,11 +116,21 @@ module.exports = function (grunt) {
 
         // Put files not handled in other tasks here
         copy: {
-            dist: {
+            strip_code_prepare: {
                 files: [{
                     expand: true,
                     dot: true,
                     cwd: '<%= yeoman.app %>',
+                    dest: '.tmp/concat',
+                    src: [
+                        'scripts/background.js'
+                    ]
+                }]
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/concat',
                     dest: '<%= yeoman.dist %>',
                     src: [
                         'scripts/background.js'
@@ -172,6 +182,15 @@ module.exports = function (grunt) {
                     configFile: 'test/e2e.conf.dev.js'
                 }
             }
+        },
+        strip_code: {
+            options: {
+                start_commend: 'test-code',
+                end_comment: 'end-test-code'
+            },
+            dist: {
+                src: '.tmp/concat/scripts/*.js'
+            }
         }
     });
 
@@ -184,14 +203,16 @@ module.exports = function (grunt) {
         'clean:dist',
         'useminPrepare',
         'concat',
+        'copy:strip_code_prepare',
+        'strip_code:dist',
         'ngmin',
         'uglify',
         'cssmin',
         'imagemin',
         'htmlmin',
         'usemin',
+        'copy:dist',
         'chromeManifest',
-        'copy',
         'compress'
     ]);
 
