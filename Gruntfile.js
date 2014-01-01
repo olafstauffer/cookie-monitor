@@ -169,7 +169,10 @@ module.exports = function (grunt) {
                 noColor: false,
                 args: {
                     includeStackTrace: true,
-                    verbose: true
+                    verbose: true,
+                    params: {
+                        initialNrOfRows: 0
+                    }
                 }
             },
             dist: {
@@ -179,16 +182,27 @@ module.exports = function (grunt) {
             },
             dev: {
                 options: {
-                    configFile: 'test/e2e.conf.dev.js'
+                    configFile: 'test/e2e.conf.dev.js',
+                    args: {
+                        params: {
+                            initialNrOfRows: 1
+                        }
+                    }
                 }
             }
         },
         strip_code: {
-            options: {
-                start_commend: 'test-code',
-                end_comment: 'end-test-code'
+            removeTestCode: {
+                options: {
+                    start_commend: 'test-code',
+                    end_comment: 'end-test-code'
+                },
+                src: '.tmp/concat/scripts/*.js'
             },
-            dist: {
+            removeConsoleLog: {
+                options: {
+                    pattern: /.*console.log\(.*/g
+                },
                 src: '.tmp/concat/scripts/*.js'
             }
         }
@@ -204,7 +218,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concat',
         'copy:strip_code_prepare',
-        'strip_code:dist',
+        'strip_code',
         'ngmin',
         'uglify',
         'cssmin',
