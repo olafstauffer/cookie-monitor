@@ -19,7 +19,12 @@ exports.config = {
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
   capabilities: {
     'browserName': 'chrome',
-    'chromeOptions': {'args': ['--load-extension='+process.cwd()+'/app']}
+    'chromeOptions': {'args': [
+      '--load-extension='+process.cwd()+'/app',
+      '--enable-extension-activity-logging',
+      '--enable-logging',
+      '--log-level=0'
+      ]}
   },
 
   // A base URL for your application under test. Calls to protractor.get()
