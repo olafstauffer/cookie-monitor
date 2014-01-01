@@ -74,7 +74,9 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 
 	// fill table when popup is generated
 	cookieEventService.getCookieLog(function(cookieLog){
+		console.log('getCookieLog returned, length='+cookieLog.length);
 		$scope.cookieLog = cookieLog;
+		$scope.$apply();
 	});
 
 	// add a table row every time a cookie event is found 
