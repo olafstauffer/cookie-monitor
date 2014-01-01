@@ -41,7 +41,7 @@ describe('', function () {
 		});
 
 		it('should contain a cookieTable', function () {
-			expect(browser.isElementPresent(by.css('.cookieTable'))).toBe(true);
+			expect(browser.isElementPresent(by.css('#cookieTable'))).toBe(true);
 		});
 
 		// it('test', function () {	

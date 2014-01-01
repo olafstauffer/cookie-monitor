@@ -25,8 +25,6 @@ cookieMonitorApp.directive('cookieDetail', function () {
 		restrict: 'A',
 		scope: {
 			cookies: '=cookies'
-		},
-		link: function(scope, elem, attrs){
 		}
 	};
 });
@@ -48,7 +46,7 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 		'</div>';
 
     $scope.currentCookie = [];  // TODO: change workaround to use the same directive
-    							//       on both: current and selected cookies
+								//       on both: current and selected cookies
 	$scope.selectedCookies = [];
 
 	$scope.cookieTableConfig = {
