@@ -10,9 +10,7 @@ cookieMonitorApp.service('cookieEventService', function(){
 	};
 
 	this.clearCookieLog = function(callback){
-		console.log('clear cookie log service reached');
 		chrome.runtime.sendMessage(null, {'action': 'clearList'}, function(response){
-			console.log('response='+response);
 			callback(response);
 		});
 	};
@@ -74,7 +72,6 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 
 	// fill table when popup is generated
 	cookieEventService.getCookieLog(function(cookieLog){
-		console.log('getCookieLog returned, length='+cookieLog.length);
 		$scope.cookieLog = cookieLog;
 		$scope.$apply();
 	});
@@ -82,6 +79,7 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 	// add a table row every time a cookie event is found 
 	/* jshint unused: false */
 	chrome.runtime.onMessage.addListener(function(msg, sender, callback){
+		console.log('popup received message:'+JSON.stringify(msg));
 		if ( msg.action && msg.action === 'add' ){
 			$scope.cookieLog.push(msg.event);
 			$scope.$apply();

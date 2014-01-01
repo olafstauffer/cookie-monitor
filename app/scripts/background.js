@@ -19,8 +19,6 @@ cookieLog.push({
 });
 /* end-test-code */
 
-
-
 // use badge text to display a cookie counter
 // 
 function updateCounter(value){
@@ -28,7 +26,12 @@ function updateCounter(value){
 	if (value && value >= 0){
 		badgeText = '' + value;
 	}
+	console.log('set badge text='+badgeText);
 	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
+	
+	chrome.browserAction.getBadgeText({}, function(text){
+		console.log('badge text='+text);
+	});
 }
 chrome.browserAction.setBadgeBackgroundColor( {color: '#ff0000'} );
 updateCounter(0);
@@ -63,7 +66,7 @@ function broadcastCookieEvent(changeInfo, url){
 	cookieLog.push(cookieEvent);
 
 	// in case a popup is already open and needs to update its view
-	chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent}, null);
+	chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent});
 
 	cookieCounter += 1;
 	updateCounter(cookieCounter);
@@ -91,12 +94,17 @@ function onCookieChanged(changeInfo){
 	// get the url of the current page
 	// (note: this is a just a valid guess, because the cookie event cannot
 	// be linked to a originating page directly!)
-	chrome.tabs.query({currentWindow: true, active: true}, function(tab) {
+	chrome.tabs.query({currentWindow: true, active: true}, function() {
 
-		chrome.tabs.getSelected(tab.windowId, function(tab2) {
-			var currentUrl = tab2.url.split('?').shift().split('#').shift();
-			broadcastCookieEvent(changeInfo, currentUrl);
-		});
+		chrome.tabs.query(
+			{
+				active: true,
+				currentWindow: true
+			},
+			function(tabs) {
+				var currentUrl = tabs[0].url.split('?').shift().split('#').shift();
+				broadcastCookieEvent(changeInfo, currentUrl);
+			});
 
     });
 
