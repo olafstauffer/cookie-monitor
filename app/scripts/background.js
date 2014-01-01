@@ -5,13 +5,13 @@ var cookieCounter = 0;
 
 /* test-code */
 cookieLog.push({
-	'ts': 12345,
+	'ts': 1318140426005,
 	'domain': 'example.com',
 	'path': 'path',
 	'name': 'name',
 	'value': 'value',
 	'action': 'action',
-	'expiration': 12345,
+	'expiration': 1318226826005,
 	'hostonly': true,
 	'secure': true,
 	'httponly': true,
