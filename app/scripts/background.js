@@ -33,6 +33,43 @@ function updateCounter(value){
 chrome.browserAction.setBadgeBackgroundColor( {color: '#ff0000'} );
 updateCounter(0);
 
+
+// helper function to create and broadcast a cookie event
+//
+// TODO: convert to class
+
+function broadcastCookieEvent(changeInfo, url){
+
+	var currentTS = new Date().getTime();
+	var expirationTS = null;
+	if (changeInfo.cookie.expirationDate) {
+		expirationTS = new Date(changeInfo.cookie.expirationDate * 1000).getTime();
+	}
+
+	var cookieEvent = {
+		'ts': currentTS,
+		'domain': changeInfo.cookie.domain,
+		'path': changeInfo.cookie.path,
+		'name': changeInfo.cookie.name,
+		'value': changeInfo.cookie.value,
+		'action': changeInfo.cause,
+		'expiration': expirationTS,
+		'hostonly': changeInfo.cookie.hostOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
+		'secure': changeInfo.cookie.secure ? 'true' : 'false',  // grouping in ng-grid does not like booleans
+		'httponly': changeInfo.cookie.httpOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
+		'page': url
+	};
+	console.log(cookieEvent);
+	cookieLog.push(cookieEvent);
+
+	// in case a popup is already open and needs to update its view
+	chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent}, null);
+
+	cookieCounter += 1;
+	updateCounter(cookieCounter);
+}
+
+
 // capture every cookie change event and update the log
 //
 function onCookieChanged(changeInfo){
@@ -45,6 +82,12 @@ function onCookieChanged(changeInfo){
 	}
 
 
+	// no use to guess the page for expired events
+	if ( changeInfo.cause === 'expired' ){
+		broadcastCookieEvent(changeInfo, '');
+		return;
+	}
+
 	// get the url of the current page
 	// (note: this is a just a valid guess, because the cookie event cannot
 	// be linked to a originating page directly!)
@@ -52,34 +95,7 @@ function onCookieChanged(changeInfo){
 
 		chrome.tabs.getSelected(tab.windowId, function(tab2) {
 			var currentUrl = tab2.url.split('?').shift().split('#').shift();
-
-			var currentTS = new Date().getTime();
-			var expirationTS = null;
-			if (changeInfo.cookie.expirationDate) {
-				expirationTS = new Date(changeInfo.cookie.expirationDate * 1000).getTime();
-			}
-
-			var cookieEvent = {
-				'ts': currentTS,
-				'domain': changeInfo.cookie.domain,
-				'path': changeInfo.cookie.path,
-				'name': changeInfo.cookie.name,
-				'value': changeInfo.cookie.value,
-				'action': changeInfo.cause,
-				'expiration': expirationTS,
-				'hostonly': changeInfo.cookie.hostOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
-				'secure': changeInfo.cookie.secure ? 'true' : 'false',  // grouping in ng-grid does not like booleans
-				'httponly': changeInfo.cookie.httpOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
-				'page': currentUrl
-			};
-			console.log(cookieEvent);
-			cookieLog.push(cookieEvent);
-
-			// in case a popup is already open and needs to update its view
-			chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent}, null);
-
-			cookieCounter += 1;
-			updateCounter(cookieCounter);
+			broadcastCookieEvent(changeInfo, currentUrl);
 		});
 
     });
