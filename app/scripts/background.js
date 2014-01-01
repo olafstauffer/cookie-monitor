@@ -12,9 +12,9 @@ cookieLog.push({
 	'value': 'value',
 	'action': 'action',
 	'expiration': 1318226826005,
-	'hostonly': true,
-	'secure': true,
-	'httponly': true,
+	'hostonly': 'true',
+	'secure': 'true',
+	'httponly': 'true',
 	'page': 'www.example.com'
 });
 /* end-test-code */
