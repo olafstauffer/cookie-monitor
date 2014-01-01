@@ -27,21 +27,50 @@ describe('', function () {
 			browser.driver.get(popupUrl);
 		});
 
-		it('should be accessable via popupUrl', function() {
+		it('should be accessable via popupUrl ...', function() {
 			browser.driver.getTitle().then(function(title){
 				expect(title).toEqual('Cookie Monitor');
 			});
 		});
 
-		it('should contain one body element', function () {
-			expect(browser.isElementPresent(by.css('body'))).toBe(true);
-			browser.findElements(by.css('body')).then(function(list){
-				expect(list.length).toEqual(1);
-			});
-		});
+		describe('should contain', function () {
 
-		it('should contain a cookieTable', function () {
-			expect(browser.isElementPresent(by.css('#cookieTable'))).toBe(true);
+			it('a body ...', function () {
+				expect(browser.isElementPresent(by.css('body'))).toBe(true);
+				// browser.findElements(by.css('body')).then(function(list){
+				// 	expect(list.length).toEqual(1);
+				// });
+			});
+
+			it('a PageController ...', function () {
+				expect(browser.isElementPresent(by.css(
+					'div[ng-controller="PageController"]'))).toBe(true);
+			});
+			
+			it('a currentCookie element ...', function () {
+				expect(browser.isElementPresent(by.css(
+					'div[ng-controller="PageController"] #currentCookie'))).toBe(true);
+			});
+
+			it('a selectedCookies element ...', function () {
+				expect(browser.isElementPresent(by.css(
+					'div[ng-controller="PageController"] #selectedCookies'))).toBe(true);
+			});
+
+			it('a cookieTable element ...', function () {
+				expect(browser.isElementPresent(by.css(
+					'div[ng-controller="PageController"] #cookieTable'))).toBe(true);
+			});
+
+			it('a "clearSelection" button ...', function () {
+				expect(browser.isElementPresent(by.css(
+					'div[ng-controller="PageController"] button[ng-click="clearSelection()"]'))).toBe(true);
+			});
+
+			it('a "clearCookieLog" button ...', function () {
+				expect(browser.isElementPresent(by.css(
+					'div[ng-controller="PageController"] button[ng-click="clearCookieLog()"]'))).toBe(true);
+			});
 		});
 
 		// it('test', function () {	
