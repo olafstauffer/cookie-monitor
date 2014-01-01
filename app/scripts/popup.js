@@ -19,6 +19,19 @@ cookieMonitorApp.service('cookieEventService', function(){
 
 });
 
+cookieMonitorApp.directive('cookieDetail', function () {
+	return {
+		templateUrl: 'cookiedetail-partial.html',
+		restrict: 'A',
+		scope: {
+			cookies: '=cookies'
+		},
+		link: function(scope, elem, attrs){
+		}
+	};
+});
+
+
 
 
 cookieMonitorApp.controller('PageController', function($scope, cookieEventService){
@@ -34,10 +47,10 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 		'	<div ng-cell></div>' +
 		'</div>';
 
-    $scope.currentCookie = {};
+    $scope.currentCookie = [];  // TODO: change workaround to use the same directive
+    							//       on both: current and selected cookies
+	$scope.selectedCookies = [];
 
-
-	$scope.mySelections = [];
 	$scope.cookieTableConfig = {
 		data: 'cookieLog',
 		columnDefs: [
@@ -55,7 +68,7 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
         enableColumnResize: true,
         showColumnMenu: true,
         showFilter: true,
-        selectedItems: $scope.mySelections,
+        selectedItems: $scope.selectedCookies,
 	    multiSelect: true,
 	    headerRowHeight: 40,
 	    rowTemplate: rowTemplate
@@ -91,19 +104,12 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
     };
 
 	$scope.onMouseover = function(row){
-		console.log(row.entity);
-		$scope.currentCookie = row.entity;
-		// $scope.$apply();
-		console.log('currentCookie:');
-		console.log($scope.currentCookie);
+		// console.log(row.entity);
+		$scope.currentCookie = [ row.entity ];
     };
 
 	$scope.onMouseleave = function(){
-		console.log('mouse leave');
-		$scope.currentCookie = {};
-		// $scope.$apply();
-		console.log('currentCookie:');
-		console.log($scope.currentCookie);
+		$scope.currentCookie.shift();
 	};
 
 	// TODO import underscore

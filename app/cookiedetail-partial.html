@@ -1,0 +1,38 @@
+
+<div ng-repeat="cookie in cookies | orderBy:ts">
+
+<div class="cookieDetailBox">
+
+<div class="cookieDetailRow">
+	<span class="cookieDetailTitle">date:</span>
+	<span class="cookieDetailValue">{{cookie.ts | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
+	<span class="cookieDetailTitle">name:</span><span class="cookieDetailValue">{{cookie.name}}</span>
+	<div class="cookieDetailFlags">
+		<span class="cookieDetailTitle">secure:</span>
+		{{cookie.secure == "true" ? "&#x2611;" : "&#x2610;"}}
+		<span class="cookieDetailTitle">httpOnly:</span>
+		{{cookie.httponly == "true" ? "&#x2611;" : "&#x2610;"}}
+		<span class="cookieDetailTitle">hostOnly:</span>
+		{{cookie.hostonly == "true" ? "&#x2611;" : "&#x2610;"}}
+	</div>
+</div>
+
+<div class="cookieDetailRow">
+	<span class="cookieDetailTitle">domain:</span><span class="cookieDetailValue">{{cookie.domain}}</span>
+	<span class="cookieDetailTitle">path:</span><span class="cookieDetailValue">{{cookie.path}}</span>
+	<span class="cookieDetailTitle">page:</span><span class="cookieDetailValue">{{cookie.page}}</span>
+</div>
+
+<div class="cookieDetailRow">
+	<span class="cookieDetailTitle">expiration</span><span class="cookieDetailValue">{{cookie.expiration | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
+	<span class="cookieDetailTitle">days remaining:</span><span class="cookieDetailValue">{{(cookie.expiration - cookie.ts)/1000/60/60/24 | number:0}}</span>
+	<span class="cookieDetailTitle">action:</span><span class="cookieDetailValue">{{cookie.action}}</span>
+</div>
+
+<div class="cookieDetailRow">
+	<span class="cookieDetailTitle">value:</span><span class="cookieDetailValue">{{cookie.value}}</span>
+</div>
+
+</div>
+
+</div>
