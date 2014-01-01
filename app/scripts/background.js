@@ -93,8 +93,12 @@ chrome.cookies.onChanged.addListener(onCookieChanged);
 // establish communication to popup.js via messages
 //
 chrome.runtime.onMessage.addListener(function(msg, sender, callback){
+
+	console.log('received message:'+msg.action);
 	console.log(msg);
+
 	if ( msg.action && msg.action === 'sendList' ){
+		console.log('cookieLog.length='+cookieLog.length);
 		callback(cookieLog);
 	} else if ( msg.action && msg.action === 'clearList' ){
 		while (cookieLog.length > 0) {
