@@ -3,7 +3,7 @@ body {
 	min-width: 650px;
 	width: 650px;
 	min-height: 10px;
-	height: 500px;
+	height: 400px;
 	margin: 12px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -14,7 +14,7 @@ body {
 #cookieTable {
 	border: 1px solid rgb(212, 212,212);
 	width: 650px;
-	height: 400px;
+	height: 300px;
 	float: top;
 }
 
