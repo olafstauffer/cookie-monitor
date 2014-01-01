@@ -36,10 +36,6 @@ module.exports.getPopupUrl = function(){
 
 	var extensionId = null;
 	browser.driver.get('chrome://extensions-frame/');
-	browser.driver.getPageSource().then(function(text){
-		fs.writeFile('src.html', text, null);
-		//console.log(text);
-	});
 	browser.driver
 		.findElements(by.css('#extension-settings-list .extension-details'))
 		.then(function(details){
