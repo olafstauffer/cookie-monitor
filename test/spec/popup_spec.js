@@ -80,6 +80,19 @@ describe('', function () {
 		// 	})
 		// });
 
+		describe('should have a cookieTable which', function () {
+
+			// in dev we prepare the array with some elements 
+			var initialNrOfRows = browser.params.initialNrOfRows;
+			it('should have ' + initialNrOfRows + ' rows at start', function () {
+
+				var rows = element.all(by.repeater('row in renderedRows'));
+				rows.then(function(arr){
+					expect(arr.length).toEqual(initialNrOfRows);
+				});
+			});
+
+		});
 
 	});
 
