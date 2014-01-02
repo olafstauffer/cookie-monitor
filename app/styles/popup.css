@@ -22,6 +22,12 @@ body {
 	text-align: center;
 }
 
+
+.sessionCookie {
+	/*color: rgba(22, 22, 231, 0.7);*/
+	color: red;
+}
+
 #currentCookie {
 	background-color: rgba(255, 228, 181, 0.3);
 }

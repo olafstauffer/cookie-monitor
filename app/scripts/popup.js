@@ -35,14 +35,30 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 	$scope.cookieLog = [];
 
 	// modified cell template to insert checked/uncheck chars instead of "true"/"false"
-	var boolCellTemplate = '<div class=\"ngCellText cookieTableCell\" ng-class=\"col.colIndex()\">{{row.entity[col.field] == "true" ? "&#x2611;" : "&#x2610;"}}</div>';
+	var boolCellTemplate = 
+		'<div class=\"ngCellText cookieTableCell\" ng-class=\"col.colIndex()\">' +
+		'{{row.entity[col.field] == "true" ? "&#x2611;" : "&#x2610;"}}</div>';
 
 	// modified row template to call onMouseover with the current row
-	var rowTemplate = '<div ng-mouseover=\"onMouseover(row)\" ng-mouseleave=\"onMouseleave()\" ng-style=\"{ \'cursor\': row.cursor }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngCell {{col.cellClass}} \">' +
-		'	<div class=\"ngVerticalBar\" ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>' +
-		'	<div ng-cell></div>' +
-		'</div>';
+	var rowTemplate = '<div ng-class="{sessionCookie: row.getProperty(\'daysleft\') < 1}">'+
+		'<div ' +
+		' ng-mouseover="onMouseover(row)" ng-mouseleave="onMouseleave()" ' +
+		' ng-style="{ cursor: row.cursor }" '+
+		' ng-repeat="col in renderedColumns" ' +
+		' ng-class="col.colIndex()"' +
+		' class="ngCell"' +
+		'>' +
+		'<div ' +
+		' class="ngVerticalBar" ' +
+		' ng-style="{height: rowHeight}" ' +
+		' ng-class="{ ngVerticalBarVisible: !$last }"' +
+		'>' +
+		'&nbsp;'+
+		'</div>' +
+		'<div ng-cell></div>' +
+		'</div>' +'</div>';
 
+		// ' ng-class=\"{ \'sessionCookie\': row.getProperty(\'daysleft\') < 1}\" >' +
     $scope.currentCookie = [];  // TODO: change workaround to use the same directive
 								//       on both: current and selected cookies
 	$scope.selectedCookies = [];
