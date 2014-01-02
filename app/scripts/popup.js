@@ -56,7 +56,8 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 			{field: 'page', displayName: 'Page Guess'},
 			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate},
 			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate},
-			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate}
+			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate},
+			{field: 'daysleft', displayName: 'Days Left', width: 50, visible: false}
 		],
 		sortInfo: {fields: ['ts'], directions: ['desc']},
 		showGroupPanel: true,
@@ -110,7 +111,7 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 		$scope.currentCookie.shift();
 	};
 
-	// TODO import underscore
+	// TODO use underscore
 	$scope.isEmpty = function(object) {
 		for(var prop in object) {
 			if(object.hasOwnProperty(prop)){

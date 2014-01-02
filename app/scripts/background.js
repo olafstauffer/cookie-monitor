@@ -12,6 +12,7 @@ cookieLog.push({
 	'value': 'value',
 	'action': 'action',
 	'expiration': 1318226826005,
+	'daysleft': 1,
 	'hostonly': 'true',
 	'secure': 'true',
 	'httponly': 'true',
@@ -57,6 +58,7 @@ function broadcastCookieEvent(changeInfo, url){
 		'value': changeInfo.cookie.value,
 		'action': changeInfo.cause,
 		'expiration': expirationTS,
+		'daysleft': expirationTS ? Math.floor((expirationTS - currentTS)/1000/60/60/24) : 0,
 		'hostonly': changeInfo.cookie.hostOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
 		'secure': changeInfo.cookie.secure ? 'true' : 'false',  // grouping in ng-grid does not like booleans
 		'httponly': changeInfo.cookie.httpOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans

@@ -25,7 +25,7 @@
 
 <div class="cookieDetailRow">
 	<span class="cookieDetailTitle">expiration</span><span class="cookieDetailValue">{{cookie.expiration | date:'yyyy-MM-ddTHH:mm:ss.sssZ'}}</span>
-	<span class="cookieDetailTitle">days remaining:</span><span class="cookieDetailValue">{{(cookie.expiration - cookie.ts)/1000/60/60/24 | number:0}}</span>
+	<span class="cookieDetailTitle">days remaining:</span><span class="cookieDetailValue">{{cookie.daysleft}}</span>
 	<span class="cookieDetailTitle">action:</span><span class="cookieDetailValue">{{cookie.action}}</span>
 </div>
 
