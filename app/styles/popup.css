@@ -30,11 +30,16 @@ body {
 
 #buttonBox {
 	display: block;
+	font-size: small;
+	font-variant: small-caps;	
+	margin-bottom: 10px;
 }
-#clearButtons {
+#totals {
 	display: inline;
+	margin: 5px;
+	vertical-align: middle;
 }
-#exportButtons {
+#selections {
 	display: inline;
 	float: right;
 }

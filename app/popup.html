@@ -21,7 +21,7 @@
 </head>
 <body>
 	<header>
-		<h2>Cookie Monitor</h2>
+		<h3>Cookie Monitor</h3>
 	</header>
 
 
@@ -30,14 +30,19 @@
 
 		<div id="cookieTable" ng-grid="cookieTableConfig"></div>
 		<div id="buttonBox">
-			<div id="clearButtons">
-				<button ng-click="clearSelection()">Clear Selection</button>
-				<button ng-click="clearCookieLog()">Clear Cookie Log</button>
+			<div id="totals" ng-show="cookieLog.length !== 0">
+				<span>Total:</span> 
+				<span>{{cookieLog.length}}</span>
+				<button ng-click="clearCookieLog()">CLEAR</button>
+				<button ng-click="exportCookieLog()">EXPORT</button>
 			</div>
-			<div id="exportButtons">
-				<button ng-click="exportSelected()">Export Selected Cookies</button>
-				<button ng-click="exportCookieLog()">Export All Cookies</button>
+			<div id="selections" ng-show="selectedCookies.length !== 0">
+				<span>Selected:</span> 
+				<span>{{selectedCookies.length}}</span>
+				<button ng-click="clearSelection()">CLEAR</button>
+				<button ng-click="exportSelected()">EXPORT</button>
 			</div>
+
 		</div>
 
 
