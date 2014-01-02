@@ -1,8 +1,8 @@
 {
     "name": "Cookie Monitor",
-    "version": "0.2.1",
+    "version": "0.2.0",
     "manifest_version": 2,
-    "description": "Display updates to cookies on the page. TODO",
+    "description": "Display, search, group, export, ... every cookie event in detail.",
     "icons": {
         "128": "images/icon128x128.png"
     },
