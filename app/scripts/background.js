@@ -1,25 +1,49 @@
 'use strict';
 
 var cookieLog = [];  // TODO restrain size
-var cookieCounter = 0;
+/* test-code */
+cookieLog.push({
+	'ts': 1318140426005,
+	'domain': 'example.com',
+	'path': 'path',
+	'name': 'cookie',
+	'value': 'value',
+	'action': 'action',
+	'expiration': 1318226826005,
+	'daysleft': 1,
+	'hostonly': 'true',
+	'secure': 'true',
+	'httponly': 'true',
+	'page': 'www.example.com'
+});
+cookieLog.push({
+	'ts': 1318140426005,
+	'domain': 'example.com',
+	'path': 'path',
+	'name': 'session',
+	'value': 'value',
+	'action': 'action',
+	'expiration': null,
+	'daysleft': 0,
+	'hostonly': 'false',
+	'secure': 'false',
+	'httponly': 'false',
+	'page': 'www.example.com'
+});
+/* end-test-code */
 
 
 // use badge text to display a cookie counter
 // 
-function updateCounter(value){
-	var badgeText = '';
-	if (value && value >= 0){
-		badgeText = '' + value;
-	}
-	console.log('set badge text='+badgeText);
-	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
-	
-	chrome.browserAction.getBadgeText({}, function(text){
-		console.log('badge text='+text);
-	});
-}
 chrome.browserAction.setBadgeBackgroundColor( {color: '#ff0000'} );
-updateCounter(0);
+function updateBadge(){
+
+	var badgeText = '';
+	if (cookieLog.length !== 0){
+		badgeText = '' + cookieLog.length;
+	}
+	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
+}
 
 
 // helper function to create and broadcast a cookie event
@@ -54,8 +78,7 @@ function broadcastCookieEvent(changeInfo, url){
 	// in case a popup is already open and needs to update its view
 	chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent});
 
-	cookieCounter += 1;
-	updateCounter(cookieCounter);
+	updateBadge();
 }
 
 
@@ -95,63 +118,30 @@ function onCookieChanged(changeInfo){
     });
 
 }
+
+// watch for every cookie event
+//
 chrome.cookies.onChanged.addListener(onCookieChanged);
-
-
+updateBadge();
 
 
 // establish communication to popup.js via messages
 //
 chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 
-	console.log('received message:'+msg.action);
-	console.log(msg);
+	console.log('background.js received message, action='+ msg.action);
 
 	if ( msg.action && msg.action === 'sendList' ){
-		console.log('cookieLog.length='+cookieLog.length);
 		callback(cookieLog);
 	} else if ( msg.action && msg.action === 'clearList' ){
+		// clear the cookie list
 		while (cookieLog.length > 0) {
 			cookieLog.pop();
 		}
-		updateCounter(0);
+		updateBadge();
 		callback(cookieLog);
 	}
 });
-
-
-
-
-/* test-code */
-cookieLog.push({
-	'ts': 1318140426005,
-	'domain': 'example.com',
-	'path': 'path',
-	'name': 'cookie',
-	'value': 'value',
-	'action': 'action',
-	'expiration': 1318226826005,
-	'daysleft': 1,
-	'hostonly': 'true',
-	'secure': 'true',
-	'httponly': 'true',
-	'page': 'www.example.com'
-});
-cookieLog.push({
-	'ts': 1318140426005,
-	'domain': 'example.com',
-	'path': 'path',
-	'name': 'session',
-	'value': 'value',
-	'action': 'action',
-	'expiration': null,
-	'daysleft': 0,
-	'hostonly': 'false',
-	'secure': 'false',
-	'httponly': 'false',
-	'page': 'www.example.com'
-});
-/* end-test-code */
 
 
 
