@@ -1,5 +1,5 @@
 'use strict';
-/* global describe, it, beforeEach, expect, xdescribe, browser, by, element */
+/* global describe, it, beforeEach, expect, browser, by, element */
 
 var helpers = require('../helpers.js');
 
@@ -47,9 +47,13 @@ describe('', function () {
 					'div[ng-controller="PageController"]'))).toBe(true);
 			});
 			
-			it('a currentCookie element ...', function () {
+			it('a currentCookie element that is hidden on startup ...', function () {
 				expect(browser.isElementPresent(by.css(
 					'div[ng-controller="PageController"] #currentCookie'))).toBe(true);
+
+				expect(element(by.css(
+					'div[ng-controller="PageController"] #currentCookie')).isDisplayed()).toBe(false);
+
 			});
 
 			it('a selectedCookies element ...', function () {
@@ -71,41 +75,25 @@ describe('', function () {
 				expect(browser.isElementPresent(by.css(
 					'div[ng-controller="PageController"] button[ng-click="clearCookieLog()"]'))).toBe(true);
 			});
+
 		});
 
-		// it('test', function () {	
-		// 	// browser.findElement(by.css('body')).getText().then(function(text){		
-		// 	element(by.css('body')).getText().then(function(text){
-		// 		expect(text).toEqual("test");
-		// 	})
-		// });
 
 		describe('should have a cookieTable which', function () {
 
-			// in dev we prepare the array with some elements 
-			var initialNrOfRows = browser.params.initialNrOfRows;
-			it('should have ' + initialNrOfRows + ' rows at start', function () {
+			// in dev we prepopulate the array with some elements 
+			var refRows = parseInt(browser.params.initialNrOfRows, 10);
+			
+			it('should have the correct number of rows after initializing ...', function () {
 
 				var rows = element.all(by.repeater('row in renderedRows'));
 				rows.then(function(arr){
-					expect(arr.length).toEqual(initialNrOfRows);
+					expect(arr.length).toEqual(refRows);
 				});
 			});
 
 		});
-
 	});
 
-	xdescribe('the display of the current cookie', function () {
-
-		beforeEach(function () {
-			browser.driver.get(popupUrl);
-		});
-
-		it('should be disabled on startup', function () {
-			expect(element(by.css('.currentCookie')).isDisplayed()).toBe(true);
-		});
-		// TODO hover and repeat with inverted expectations
-	});
 
 });

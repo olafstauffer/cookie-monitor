@@ -35,7 +35,7 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 	$scope.cookieLog = [];
 
 	// modified cell template to insert checked/uncheck chars instead of "true"/"false"
-	var boolCellTemplate = 
+	var boolCellTemplate =
 		'<div class=\"ngCellText cookieTableCell\" ng-class=\"col.colIndex()\">' +
 		'{{row.entity[col.field] == "true" ? "&#x2611;" : "&#x2610;"}}</div>';
 
