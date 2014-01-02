@@ -11,12 +11,19 @@ body {
 	user-select: none;
 }
 
+.red {
+	color: red;
+}
+
 #cookieTable {
 	border: 1px solid rgb(212, 212,212);
 	width: 650px;
 	height: 300px;
 	float: top;
 }
+
+
+
 
 .cookieTableCell {
 	text-align: center;
@@ -103,7 +110,77 @@ line breaks in table header
 	overflow: hidden;
 }
 
+/* ugly ng-grid hack:
 
+When aggregating a col the first column from an expanded row
+display the row object itself. Somehow the innerText of this 
+element is bound to the row?!?
+
+Unfortunatelly this cell is generated on the fly and has no
+class attached to it. Therefore this hack disables all
+cells (.ngCellText) and enables selected one afterward.
+
+The remaining is the ugly cell ... which vanished ...
+
+Ugly ... but working.
+*/
+
+.ngCellText {
+	padding: 5px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	overflow: hidden;
+
+	visibility: hidden; /* ng-grid hack */
+}
+
+/* Attention: this has to be placed after the definition above */
+.visibleCell {
+	visibility: visible; /* ng-grid hack */
+}
+
+
+
+.ngGroupList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	visibility: visible; /* ng-grid hack */
+}
+
+.ngAggregate {
+  position: absolute;
+  background-color: #c9dde1;
+  border-bottom: 1px solid beige;
+  overflow: hidden;
+  top: 0;
+  bottom: 0;
+  right: -1px;
+  left: 0;
+	visibility: visible; /* ng-grid hack */
+}
+
+.ngGroupPanelDescription {
+  margin-top: 5px;
+  margin-left: 5px;
+	visibility: visible; /* ng-grid hack */
+}
+
+.ngMenuText {
+  position: relative;
+  top: 2px;
+  left: 2px;
+	visibility: visible; /* ng-grid hack */
+}
+.ngColList {
+  list-style-type: none;
+	visibility: visible; /* ng-grid hack */
+}
 
 
 
