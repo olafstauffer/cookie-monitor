@@ -5,7 +5,8 @@
     "angular": "1.2.5",
     "jquery": "1.10.2",
     "jquery-ui": "1.10.3",
-    "ng-grid": "2.0.7"
+    "ng-grid": "2.0.7",
+    "underscore": "~1.5.2"
   },
   "devDependencies": {}
 }

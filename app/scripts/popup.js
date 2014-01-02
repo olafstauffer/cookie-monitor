@@ -1,6 +1,6 @@
 'use strict';
 
-/* global cookieMonitorApp */
+/* global cookieMonitorApp, _ */
 cookieMonitorApp.service('cookieEventService', function(){
 
 	this.getCookieLog = function(callback){
@@ -127,15 +127,6 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 		$scope.currentCookie.shift();
 	};
 
-	// TODO use underscore
-	$scope.isEmpty = function(object) {
-		for(var prop in object) {
-			if(object.hasOwnProperty(prop)){
-				return false;
-			}
-		}
-		return true;
-	};
 });
 
 
