@@ -78,11 +78,11 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 
 	// modified cell template to insert checked/uncheck chars instead of "true"/"false"
 	var boolCellTemplate =
-		'<div class=\"ngCellText cookieTableCell\" ng-class=\"col.colIndex()\">' +
+		'<div class="ngCellText cookieTableCell visibleCell" ng-class="col.colIndex()">' +
 		'{{row.entity[col.field] == "true" ? "&#x2611;" : "&#x2610;"}}</div>';
 
 	// modified row template to call onMouseover with the current row
-	var rowTemplate = '<div ng-class="{sessionCookie: row.getProperty(\'daysleft\') < 1}">'+
+	var rowTemplate =
 		'<div ' +
 		' ng-mouseover="onMouseover(row)" ng-mouseleave="onMouseleave()" ' +
 		' ng-style="{ cursor: row.cursor }" '+
@@ -97,25 +97,28 @@ cookieMonitorApp.controller('PageController', function($scope, cookieEventServic
 		'>' +
 		'&nbsp;'+
 		'</div>' +
+		'<div ng-class="{sessionCookie: row.getProperty(\'daysleft\') < 1}">' +
 		'<div ng-cell></div>' +
-		'</div>' +'</div>';
+		'</div></div>';
 
-		// ' ng-class=\"{ \'sessionCookie\': row.getProperty(\'daysleft\') < 1}\" >' +
+
+
     $scope.currentCookie = [];  // TODO: change workaround to use the same directive
 								//       on both: current and selected cookies
+								//		 (currentCookie should be an object not an array)
 	$scope.selectedCookies = [];
 
 	$scope.cookieTableConfig = {
 		data: 'cookieLog',
 		columnDefs: [
-			{field: 'ts', displayName: 'Time', cellFilter: 'date:"HH:mm:ss.sss"', width: 105},
-			{field: 'name', displayName: 'Name', width:100},
-			{field: 'domain', displayName: 'Domain', width: 150},
-			{field: 'page', displayName: 'Page Guess'},
-			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate},
-			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate},
-			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate},
-			{field: 'daysleft', displayName: 'Days Left', width: 50, visible: false}
+			{field: 'ts', displayName: 'Time', cellFilter: 'date:"HH:mm:ss.sss"', width: 105, cellClass: 'visibleCell'},
+			{field: 'name', displayName: 'Name', width:100, cellClass: 'visibleCell'},
+			{field: 'domain', displayName: 'Domain', width: 150, cellClass: 'visibleCell'},
+			{field: 'page', displayName: 'Page Guess', cellClass: 'visibleCell'},
+			{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate, visible: true},
+			{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate, visible: false},
+			{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate, visible: false},
+			{field: 'daysleft', displayName: 'Days Left', width: 50, cellClass: 'cookieTableCell visibleCell', visible: true}
 		],
 		sortInfo: {fields: ['ts'], directions: ['desc']},
 		showGroupPanel: true,
