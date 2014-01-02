@@ -185,7 +185,7 @@ module.exports = function (grunt) {
                     configFile: 'test/e2e.conf.dev.js',
                     args: {
                         params: {
-                            initialNrOfRows: 1
+                            initialNrOfRows: 2
                         }
                     }
                 }

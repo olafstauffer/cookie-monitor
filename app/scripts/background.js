@@ -3,22 +3,6 @@
 var cookieLog = [];  // TODO restrain size
 var cookieCounter = 0;
 
-/* test-code */
-cookieLog.push({
-	'ts': 1318140426005,
-	'domain': 'example.com',
-	'path': 'path',
-	'name': 'name',
-	'value': 'value',
-	'action': 'action',
-	'expiration': 1318226826005,
-	'daysleft': 1,
-	'hostonly': 'true',
-	'secure': 'true',
-	'httponly': 'true',
-	'page': 'www.example.com'
-});
-/* end-test-code */
 
 // use badge text to display a cookie counter
 // 
@@ -138,6 +122,36 @@ chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 
 
 
+/* test-code */
+cookieLog.push({
+	'ts': 1318140426005,
+	'domain': 'example.com',
+	'path': 'path',
+	'name': 'cookie',
+	'value': 'value',
+	'action': 'action',
+	'expiration': 1318226826005,
+	'daysleft': 1,
+	'hostonly': 'true',
+	'secure': 'true',
+	'httponly': 'true',
+	'page': 'www.example.com'
+});
+cookieLog.push({
+	'ts': 1318140426005,
+	'domain': 'example.com',
+	'path': 'path',
+	'name': 'session',
+	'value': 'value',
+	'action': 'action',
+	'expiration': null,
+	'daysleft': 0,
+	'hostonly': 'false',
+	'secure': 'false',
+	'httponly': 'false',
+	'page': 'www.example.com'
+});
+/* end-test-code */
 
 
 
