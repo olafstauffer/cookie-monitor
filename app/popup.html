@@ -29,9 +29,15 @@
 
 
 		<div id="cookieTable" ng-grid="cookieTableConfig"></div>
-		<div>
-			<button ng-click="clearSelection()">Clear Selection</button>
-			<button ng-click="clearCookieLog()">Clear Cookie Log</button>
+		<div id="buttonBox">
+			<div id="clearButtons">
+				<button ng-click="clearSelection()">Clear Selection</button>
+				<button ng-click="clearCookieLog()">Clear Cookie Log</button>
+			</div>
+			<div id="exportButtons">
+				<button ng-click="exportSelected()">Export Selected Cookies</button>
+				<button ng-click="exportCookieLog()">Export All Cookies</button>
+			</div>
 		</div>
 
 

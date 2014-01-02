@@ -28,6 +28,17 @@ body {
 	color: red;
 }
 
+#buttonBox {
+	display: block;
+}
+#clearButtons {
+	display: inline;
+}
+#exportButtons {
+	display: inline;
+	float: right;
+}
+
 #currentCookie {
 	background-color: rgba(255, 228, 181, 0.3);
 }
