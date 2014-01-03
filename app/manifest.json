@@ -1,6 +1,6 @@
 {
     "name": "Cookie Monitor",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "manifest_version": 2,
     "description": "Display, search, group, export, ... every cookie event in detail.",
     "icons": {
@@ -17,6 +17,7 @@
         "default_title": "Cookie Monitor",
         "default_popup": "popup.html"
     },
+    "options_page": "options.html",
     "permissions": [
         "tabs",
         "cookies",

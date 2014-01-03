@@ -1,4 +1,11 @@
 
+## Next:
+ * add options page
+ * make csv col sep a config
+ * persist config
+ * make color map (e.g. session cooie -> red) a config
+ * send cookie events to ElasticSearch server
+
 ## Testing
 
 Right now only e2e test using protractor (webdriver) are being executed.
@@ -61,3 +68,7 @@ Free for personnal use
 http://www.iconattitude.com/icons/ico/6664/utilities-system-monitor.html
 
 
+## Versions
+
+ * 0.3.x Add options.html
+ * 0.2.x Add csv export

@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app="CookieMonitorApp" ng-csp>
 <head>
-	<title>Cookie Monitor</title>
-	
+	<title>Cookie Monitor - Options</title>	
 	<meta charset="UTF-8">
 
 	<!-- build:css styles/vendor.css -->
@@ -22,32 +21,12 @@
 </head>
 <body>
 	<header>
-		<h3>Cookie Monitor</h3>
+		<h3>Options</h3>
 	</header>
 
-	<div ng-controller="PopupController">
-
-		<div id="cookieTable" ng-grid="cookieTableConfig"></div>
-		<div id="buttonBox">
-			<div id="totals" ng-show="cookieLog.length !== 0">
-				<span>Total:</span> 
-				<span>{{cookieLog.length}}</span>
-				<button ng-click="clearCookieLog()">CLEAR</button>
-				<button ng-click="exportCookieLog()">EXPORT</button>
-			</div>
-			<div id="selections" ng-show="selectedCookies.length !== 0">
-				<span>Selected:</span> 
-				<span>{{selectedCookies.length}}</span>
-				<button ng-click="clearSelection()">CLEAR</button>
-				<button ng-click="exportSelected()">EXPORT</button>
-			</div>
-
-		</div>
-
-
-		<div id="currentCookie" cookie-detail cookies='currentCookie' ng-show="!isEmpty(currentCookie)"></div>
-		
-		<div id="selectedCookies" cookie-detail cookies='selectedCookies'></div>
+	<div ng-controller="OptionsController">
+		<h4>TEST</h4>
+		<div>{{test}}</div>
 	</div>
 
 	<!-- build:js scripts/vendor.js -->

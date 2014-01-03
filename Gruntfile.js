@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         'bower-install': {
             app: {
-                src: ['<%= yeoman.app %>/popup.html'],
+                src: ['<%= yeoman.app %>/popup.html', '<%= yeoman.app %>/options.html'],
                 ignorePath: '<%= yeoman.app %>'
             }
         },
@@ -56,7 +56,9 @@ module.exports = function (grunt) {
         },
         useminPrepare: {
             html: [
-                '<%= yeoman.app %>/popup.html'
+                '<%= yeoman.app %>/popup.html',
+                '<%= yeoman.app %>/options.html',
+                '<%= yeoman.app %>/templates/*'
             ],
             options: {
                 dest: '<%= yeoman.dist %>/'
@@ -96,7 +98,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>',
-                    src: '*.html',
+                    src: '{,*/}*.html',
                     dest: '<%= yeoman.dist %>'
                 }]
             }
@@ -113,7 +115,13 @@ module.exports = function (grunt) {
                 }]
             }
         },
-
+        // TODO: check what causes the error within
+        //       the vendor code when activating mangle
+        uglify: {
+            options: {
+                mangle: false
+            },
+        },
         // Put files not handled in other tasks here
         copy: {
             strip_code_prepare: {
@@ -213,8 +221,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'bower-install',
         'clean:dist',
+        'bower-install',
         'useminPrepare',
         'concat',
         'copy:strip_code_prepare',

@@ -42,38 +42,34 @@ describe('', function () {
 				// });
 			});
 
-			it('a PageController ...', function () {
+			it('a PopupController ...', function () {
 				expect(browser.isElementPresent(by.css(
-					'div[ng-controller="PageController"]'))).toBe(true);
+					'div[ng-controller="PopupController"]'))).toBe(true);
 			});
 			
-			it('a currentCookie element that is hidden on startup ...', function () {
+			it('a currentCookie element ...', function () {
 				expect(browser.isElementPresent(by.css(
-					'div[ng-controller="PageController"] #currentCookie'))).toBe(true);
-
-				expect(element(by.css(
-					'div[ng-controller="PageController"] #currentCookie')).isDisplayed()).toBe(false);
-
+					'div[ng-controller="PopupController"] #currentCookie'))).toBe(true);
 			});
 
 			it('a selectedCookies element ...', function () {
 				expect(browser.isElementPresent(by.css(
-					'div[ng-controller="PageController"] #selectedCookies'))).toBe(true);
+					'div[ng-controller="PopupController"] #selectedCookies'))).toBe(true);
 			});
 
 			it('a cookieTable element ...', function () {
 				expect(browser.isElementPresent(by.css(
-					'div[ng-controller="PageController"] #cookieTable'))).toBe(true);
+					'div[ng-controller="PopupController"] #cookieTable'))).toBe(true);
 			});
 
 			it('a "clearSelection" button ...', function () {
 				expect(browser.isElementPresent(by.css(
-					'div[ng-controller="PageController"] button[ng-click="clearSelection()"]'))).toBe(true);
+					'div[ng-controller="PopupController"] button[ng-click="clearSelection()"]'))).toBe(true);
 			});
 
 			it('a "clearCookieLog" button ...', function () {
 				expect(browser.isElementPresent(by.css(
-					'div[ng-controller="PageController"] button[ng-click="clearCookieLog()"]'))).toBe(true);
+					'div[ng-controller="PopupController"] button[ng-click="clearCookieLog()"]'))).toBe(true);
 			});
 
 		});
