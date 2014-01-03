@@ -3,7 +3,7 @@
 
 Application.Controllers
 
-	.controller('PopupController', ['$scope', 'cookieEventService', 'cookieExportService', 'configService', 
+	.controller('PopupController', ['$scope', 'cookieEventService', 'cookieExportService', 'configService',
 		function($scope, cookieEventService, cookieExportService, configService){
 
 		$scope.cookieLog = [];
@@ -96,11 +96,11 @@ Application.Controllers
 	    };
 
 		$scope.exportSelected = function(){
-			cookieExportService.exportCookiesToCsv($scope.selectedCookies, configService.get("csvExportSelectedPrefix"));
+			cookieExportService.exportCookiesToCsv($scope.selectedCookies, configService.get('csvExportSelectedPrefix'));
 	    };
 
 		$scope.exportCookieLog = function(){
-			cookieExportService.exportCookiesToCsv($scope.cookieLog, configService.get("csvExportAllPrefix"));
+			cookieExportService.exportCookiesToCsv($scope.cookieLog, configService.get('csvExportAllPrefix'));
 	    };
 
 		$scope.onMouseover = function(row){

@@ -6,19 +6,19 @@ Application.Services
 	.service('configService', function(){
 
 		var defaults = {
-			"csvExportAllPrefix": "cookies",
-			"csvExportSelectedPrefix": "selected-cookies",
-			"csvExportColSep": ",",
-			"csvExportDoAddTimestamp": "no"
-		}
+			'csvExportAllPrefix': 'cookies',
+			'csvExportSelectedPrefix': 'selected-cookies',
+			'csvExportColSep': ',',
+			'csvExportDoAddTimestamp': 'no'
+		};
 
 		this.get = function(key){
 			return localStorage.getItem(key);
-		}
+		};
 
 		this.set = function(key, value){
 			localStorage.setItem(key, value);
-		}
+		};
 
 		this.getConfig = function(){
 			var config = {};
@@ -32,7 +32,7 @@ Application.Services
 				} else {
 					config[key] = defaultValue;
 				}
-			})
+			});
 			return config;
 		};
 
@@ -41,13 +41,13 @@ Application.Services
 				if (config[key] && config[key] !== null){
 					localStorage.setItem(key, config[key]);
 				}
-			})
+			});
 		};
 
 		this.saveDefaults = function(){
 			_.each(defaults, function(value, key){
 				localStorage.setItem(key, value);
-			})
+			});
 		};
 
 	});

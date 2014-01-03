@@ -18,7 +18,7 @@ Application.Controllers
 
 		$scope.resetConfig = function(){
 			configService.saveDefaults();
-			$scope.config = configService.getConfig();	
+			$scope.config = configService.getConfig();
 		};
 
 	});
