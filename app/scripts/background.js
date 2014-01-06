@@ -45,6 +45,53 @@ function updateBadge(){
 	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
 }
 
+// TODO: refactor cookie event to own class
+function toJSON(cookieEvent){
+
+	var result = {};
+	result.ts = new Date(cookieEvent.ts).toISOString();
+	if (cookieEvent.expiration && cookieEvent.expiration !== null){
+		result.expiration = new Date(cookieEvent.expiration).toISOString();
+	}
+
+	['domain', 'path', 'action', 'name', 'value', 'page'].forEach(function(key){
+		result[key] = cookieEvent[key];
+	});
+
+	result.hostonly = (cookieEvent.hostonly === 'true');
+	result.secure = (cookieEvent.secure === 'true');
+	result.httponly = (cookieEvent.httponly === 'true');
+
+	return JSON.stringify(result);
+}
+
+
+function sendToElasticSearch(cookie){
+
+	// TODO: check if there is a way to extend the angular app to
+	//       the background page without constantly loading to much 
+	//       into the browser; 
+
+	if ( localStorage.getItem('elasticsearchEnableExport') !== 'yes' ){
+		return;
+	}
+
+	var elasticsearchUrl = localStorage.getItem('elasticsearchUrl');
+	if (!elasticsearchUrl || elasticsearchUrl === null){
+		elasticsearchUrl = 'http://localhost:9200/browserdata/cookie'; // TODO: sync with config-server.js
+	}
+	console.log('url='+elasticsearchUrl);
+	// console.log('data='+toJSON(cookie));
+
+	var client = new XMLHttpRequest();
+    client.open('POST', elasticsearchUrl, true);
+    client.setRequestHeader('Content-Type', 'text/plain');
+    client.send(toJSON(cookie));
+
+}
+
+
+
 
 // helper function to create and broadcast a cookie event
 //
@@ -75,10 +122,12 @@ function broadcastCookieEvent(changeInfo, url){
 	console.log(cookieEvent);
 	cookieLog.push(cookieEvent);
 
+	updateBadge();
+
 	// in case a popup is already open and needs to update its view
 	chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent});
 
-	updateBadge();
+	sendToElasticSearch(cookieEvent);
 }
 
 
@@ -125,7 +174,7 @@ chrome.cookies.onChanged.addListener(onCookieChanged);
 updateBadge();
 
 
-// establish communication to popup.js via messages
+// establish communication to application via messages
 //
 chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 
@@ -142,7 +191,6 @@ chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 		callback(cookieLog);
 	}
 });
-
 
 
 

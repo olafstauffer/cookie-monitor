@@ -8,8 +8,10 @@ Application.Services
 		var defaults = {
 			'csvExportAllPrefix': 'cookies',
 			'csvExportSelectedPrefix': 'selected-cookies',
-			'csvExportColSep': ',',
-			'csvExportDoAddTimestamp': 'no'
+			'csvExportColSep': '\t',
+			'csvExportDoAddTimestamp': 'no',
+			'elasticsearchUrl': 'http://localhost:9200/browserdata/cookie', // TODO: sync with background.js
+			'elasticsearchEnableExport': 'no'
 		};
 
 		this.get = function(key){

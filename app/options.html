@@ -20,35 +20,51 @@
 
 </head>
 <body>
+
 	<header>
-		<h3>Options</h3>
+		<h3>Cookie Monitor Options</h3>
 	</header>
 
-	<div ng-controller="OptionsController">
+	<div id="options" ng-controller="OptionsController">
 
 		<form name="configForm">
-			<div>
-				<span>csv export all prefix:</span>
-				<span><input name="eap" ng-model="config.csvExportAllPrefix" required></span>
-				<span class="error" ng-show="configForm.eap.$error.required">Required!</span>
-			</div>
-			<div>
-				<span>csv export selected prefix:</span>
-				<span><input name="esp" ng-model="config.csvExportSelectedPrefix" required></span>
-				<span class="error" ng-show="configForm.esp.$error.required">Required!</span>
-			</div>
-			<div>
-				<span>csv export column seperator:</span>
-				<span><input name="ecs" ng-model="config.csvExportColSep" ng-minlength="1" ng-maxlength="1" required></span>
-				<span class="error" ng-show="configForm.ecs.$error.required">Required!</span>
-				<span class="error" ng-show="configForm.ecs.$error.maxlength">Too long!</span>
-			</div>
-			<div>
-				<span>csv export add timestamp suffix:</span>
-				<span><input type="checkbox" name="ats" ng-model="config.csvExportDoAddTimestamp" ng-true-value="yes" ng-false-value="no"></span>
-			</div>
 
-			<button ng-click="saveConfig()" ng-disabled="!configForm.$valid">SAVE</button>
+			<fieldset>
+				<legend>CSV Export:</legend>
+				<div>
+					<label for="eap">export all file prefix:</label>
+					<input name="eap" ng-model="config.csvExportAllPrefix" required size="50">
+					<div class="error" ng-show="configForm.eap.$error.required">error: value required!</div>
+		
+				</div>
+
+				<div>
+					<label for="esp">export selected file prefix:</label>
+					<input name="esp" ng-model="config.csvExportSelectedPrefix" required size="50">
+					<div class="error" ng-show="configForm.esp.$error.required">error: value required!</div>
+				</div>
+				
+				<div>
+					<label for="ats">add timestamp suffix to the filename?:</label>
+					<input type="checkbox" name="ats" ng-model="config.csvExportDoAddTimestamp" ng-true-value="yes" ng-false-value="no">
+				</div>
+			</fieldset>
+
+			<br/>
+	
+			<fieldset>
+				<legend>Elasticsearch:</legend>
+				<div>
+					<label for="eees">enable elasticsearch upload:</label>
+					<input type="checkbox" name="eees" ng-model="config.elasticsearchEnableExport" ng-true-value="yes" ng-false-value="no">
+				</div>
+				<div>
+					<label for="esurl">elasticsearch url:</label>
+					<input type="url" name="esurl" ng-model="config.elasticsearchUrl" size="50">				
+				</div>
+			</fieldset>
+
+			<button ng-click="saveConfig()" ng-disabled="!configForm.$valid" class="submit">SAVE</button>
 			<button ng-click="readConfig()">CANCEL</button>
 			<button ng-click="resetConfig()">DEFAULTS</button>
 			

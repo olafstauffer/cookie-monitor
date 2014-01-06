@@ -1,0 +1,59 @@
+/*.options-block {
+	border: 2px ridge red;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+*/
+/*.options-block-title {
+	font-size: small;
+	font-variant: small-caps;
+	margin-bottom: 15px;
+}
+*/
+/*.options-key {
+	width: 300px;
+}
+*/
+/*label {
+	float: left;
+	width: 200px;
+	font-weight: bold;
+}
+*/
+/*input, textarea {
+	width: 180px;
+	margin-bottom: 5px;
+}
+*/
+
+#options fieldset {
+	padding-bottom: 20px;
+}
+
+#options div {
+	margin-top: 5px;
+}
+
+#options legend {
+c	font-variant: small-caps;
+}
+
+#options label {
+	margin-left: 5px;
+	width: 300px;
+	display: inline-block;
+}
+
+#options input {
+	padding-left: 10px;
+	border: 1px solid #E5E5E5;
+	height: 20px;
+	color: #999999;
+}
+
+#options .error {
+	color: red;
+	font-size: small;
+	margin-left: 320px;
+}
+
