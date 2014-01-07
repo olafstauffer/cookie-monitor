@@ -3,8 +3,8 @@
 
 Application.Controllers
 
-	.controller('PopupController', ['$scope', 'cookieEventService', 'cookieExportService', 'configService', 'elasticsearchExportService',
-		function($scope, cookieEventService, cookieExportService, configService, elasticsearchExportService){
+	.controller('PopupController', ['$scope', 'cookieEventService', 'cookieExportService', 'configService',
+		function($scope, cookieEventService, cookieExportService, configService){
 
 		$scope.cookieLog = [];
 
@@ -110,10 +110,6 @@ Application.Controllers
 
 		$scope.onMouseleave = function(){
 			$scope.currentCookie.shift();
-		};
-
-		$scope.exportToElasticsearch = function(){
-			elasticsearchExportService.export($scope.selectedCookies[0]);
 		};
 
 	}]);
