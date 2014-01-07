@@ -7,9 +7,10 @@ Application.Services
 
 		this.exportCookiesToCsv = function(cookieList, filePrefix){
 
-			var csvContent = 'data:text/csv;charset=utf-8,';
 			var columnSeperator = configService.get('csvExportColSep');
 
+			// compose the filename
+			//
 			var timestampSuffix = '';
 			if ( configService.get('csvExportDoAddTimestamp') === 'yes' ){
 				// poor mans date formatter ... and without timezone correction
@@ -18,9 +19,14 @@ Application.Services
 			}
 			var filename = filePrefix + timestampSuffix + '.csv';
 
+
+			// generate the data
+			//
+			var csvContent = '';
+
 			var columnNames = ['ts', 'expiration', 'name', 'domain', 'path', 'page', 'secure', 'httponly', 'hostonly', 'value'];
 			csvContent += columnNames.join(columnSeperator).toUpperCase() + '\n';
-
+			
 			var sortedCookieList = _.sortBy(cookieList, function(cookie){
 				return cookie.ts;
 			});
@@ -39,17 +45,19 @@ Application.Services
 				var line = data.join(columnSeperator);
 				csvContent += index < cookieList.length ? line+ '\n' : line; // TODO: LF/CRLF
 			});
-			var encodedUri = encodeURI(csvContent);
 
-			chrome.runtime.getBackgroundPage(function(window){
-
-				// TODO: method is deprecated, learn new one
-
-				var link = window.document.createElement('a');
-				link.setAttribute('href', encodedUri);
-				link.setAttribute('download', filename);
-				link.click();
+			// simulate a click to automatically download the data
+			//
+			var a = window.document.createElement('a');
+			var blob = new Blob([csvContent], {
+				type: 'text/csv;charset=utf-8'
 			});
+			a.href = window.URL.createObjectURL(blob);
+			a.download = filename;
+			a.style.display = 'none';
+			window.document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(a.href);
 		};
 	
 	});
