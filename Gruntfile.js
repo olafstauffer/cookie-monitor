@@ -161,7 +161,7 @@ module.exports = function (grunt) {
         compress: {
             dist: {
                 options: {
-                    archive: 'package/chrome-extension_cookie-monitor_v<%= manifest.version%>.zip'
+                    archive: 'package/cookie-monitor_v<%= manifest.version%>.zip'
                 },
                 files: [{
                     expand: true,
