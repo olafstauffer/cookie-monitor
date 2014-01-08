@@ -15,7 +15,16 @@ Application.Services
 		};
 
 		this.get = function(key){
-			return localStorage.getItem(key);
+
+			if(localStorage.getItem(key)){
+				return localStorage.getItem(key);
+			}
+
+			if(_.has(defaults, key)){
+				return defaults[key];
+			}
+
+			return '';
 		};
 
 		this.set = function(key, value){
