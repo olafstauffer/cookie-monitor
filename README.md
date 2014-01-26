@@ -68,6 +68,7 @@ http://www.iconattitude.com/icons/ico/6664/utilities-system-monitor.html
 
 ## Versions
 
- * 0.4.x Add upload to Elasticsearch
- * 0.3.x Add options.html
- * 0.2.x Add csv export
+ * 0.5 Refactored cookie event functionality into CookieEvent class 
+ * 0.4 Add upload to Elasticsearch
+ * 0.3 Add options.html
+ * 0.2 Add csv export

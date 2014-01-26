@@ -1,37 +1,7 @@
 'use strict';
+/* global CookieEvent */
 
 var cookieLog = [];  // TODO restrain size
-/* test-code */
-cookieLog.push({
-	'ts': 1318140426005,
-	'domain': 'example.com',
-	'path': 'path',
-	'name': 'cookie',
-	'value': 'value',
-	'action': 'action',
-	'expiration': 1318226826005,
-	'daysleft': 1,
-	'hostonly': 'true',
-	'secure': 'true',
-	'httponly': 'true',
-	'page': 'www.example.com'
-});
-cookieLog.push({
-	'ts': 1318140426005,
-	'domain': 'example.com',
-	'path': 'path',
-	'name': 'session',
-	'value': 'value',
-	'action': 'action',
-	'expiration': null,
-	'daysleft': 0,
-	'hostonly': 'false',
-	'secure': 'false',
-	'httponly': 'false',
-	'page': 'www.example.com'
-});
-/* end-test-code */
-
 
 // use badge text to display a cookie counter
 // 
@@ -45,36 +15,12 @@ function updateBadge(){
 	chrome.browserAction.setBadgeText({	text: badgeText, tabId: null });
 }
 
-// TODO: refactor cookie event to own class
-function toJSON(cookieEvent){
 
-	var result = {};
-	result.ts = new Date(cookieEvent.ts).toISOString();
-	if (cookieEvent.expiration && cookieEvent.expiration !== null){
-		result.expiration = new Date(cookieEvent.expiration).toISOString();
-	}
-
-	['domain', 'path', 'action', 'name', 'value', 'page'].forEach(function(key){
-		result[key] = cookieEvent[key];
-	});
-
-	result.hostonly = (cookieEvent.hostonly === 'true');
-	result.secure = (cookieEvent.secure === 'true');
-	result.httponly = (cookieEvent.httponly === 'true');
-
-	return JSON.stringify(result);
-}
-
-
-function sendToElasticSearch(cookie){
+function sendToElasticSearch(cookieEvent){
 
 	// TODO: check if there is a way to extend the angular app to
 	//       the background page without constantly loading to much 
 	//       into the browser; 
-
-	if ( localStorage.getItem('elasticsearchEnableExport') !== 'yes' ){
-		return;
-	}
 
 	var elasticsearchUrl = localStorage.getItem('elasticsearchUrl');
 	if (!elasticsearchUrl || elasticsearchUrl === null){
@@ -86,8 +32,7 @@ function sendToElasticSearch(cookie){
 	var client = new XMLHttpRequest();
     client.open('POST', elasticsearchUrl, true);
     client.setRequestHeader('Content-Type', 'text/plain');
-    client.send(toJSON(cookie));
-
+    client.send(cookieEvent.toElasticSearch());
 }
 
 
@@ -97,29 +42,11 @@ function sendToElasticSearch(cookie){
 //
 // TODO: convert to class
 
-function broadcastCookieEvent(changeInfo, url){
+function broadcastCookieEvent(cookieEvent){
 
-	var currentTS = new Date().getTime();
-	var expirationTS = null;
-	if (changeInfo.cookie.expirationDate) {
-		expirationTS = new Date(changeInfo.cookie.expirationDate * 1000).getTime();
-	}
-
-	var cookieEvent = {
-		'ts': currentTS,
-		'domain': changeInfo.cookie.domain,
-		'path': changeInfo.cookie.path,
-		'name': changeInfo.cookie.name,
-		'value': changeInfo.cookie.value,
-		'action': changeInfo.cause,
-		'expiration': expirationTS,
-		'daysleft': expirationTS ? Math.floor((expirationTS - currentTS)/1000/60/60/24) : 0,
-		'hostonly': changeInfo.cookie.hostOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
-		'secure': changeInfo.cookie.secure ? 'true' : 'false',  // grouping in ng-grid does not like booleans
-		'httponly': changeInfo.cookie.httpOnly ? 'true' : 'false',  // grouping in ng-grid does not like booleans
-		'page': url
-	};
+	console.log('broadcastCookieEvent:');
 	console.log(cookieEvent);
+
 	cookieLog.push(cookieEvent);
 
 	updateBadge();
@@ -127,7 +54,10 @@ function broadcastCookieEvent(changeInfo, url){
 	// in case a popup is already open and needs to update its view
 	chrome.runtime.sendMessage(null, {'action': 'add', 'event': cookieEvent});
 
-	sendToElasticSearch(cookieEvent);
+	// optionally send the event to elastic search
+	if ( localStorage.getItem('elasticsearchEnableExport') === 'yes' ){
+		sendToElasticSearch(cookieEvent);
+	}
 }
 
 
@@ -142,10 +72,11 @@ function onCookieChanged(changeInfo){
 		return;
 	}
 
+	var cookieEvent = new CookieEvent(changeInfo.removed, changeInfo.cause, changeInfo.cookie);
 
 	// no use to guess the page for expired events
 	if ( changeInfo.cause === 'expired' ){
-		broadcastCookieEvent(changeInfo, '');
+		broadcastCookieEvent(cookieEvent);
 		return;
 	}
 
@@ -161,7 +92,8 @@ function onCookieChanged(changeInfo){
 			},
 			function(tabs) {
 				var currentUrl = tabs[0].url.split('?').shift().split('#').shift();
-				broadcastCookieEvent(changeInfo, currentUrl);
+				cookieEvent.setPage(currentUrl);
+				broadcastCookieEvent(cookieEvent);
 			});
 
     });
@@ -171,7 +103,7 @@ function onCookieChanged(changeInfo){
 // watch for every cookie event
 //
 chrome.cookies.onChanged.addListener(onCookieChanged);
-updateBadge();
+// updateBadge();
 
 
 // establish communication to application via messages
@@ -183,7 +115,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 	if ( msg.action && msg.action === 'sendList' ){
 		callback(cookieLog);
 	} else if ( msg.action && msg.action === 'clearList' ){
-		// clear the cookie list
+		// fast way to clear the cookie list
 		while (cookieLog.length > 0) {
 			cookieLog.pop();
 		}
@@ -193,6 +125,40 @@ chrome.runtime.onMessage.addListener(function(msg, sender, callback){
 });
 
 
+/* test-code */
+chrome.runtime.onInstalled.addListener(function(){
+	var testEvent1 = new CookieEvent(false, 'action', {
+			'domain': 'example.com',
+			'path': 'path',
+			'name': 'cookie1',
+			'value': 'value1',
+			'hostOnly': true,
+			'secure': true,
+			'httpOnly': true
+		});
+	testEvent1.setEventTS(1318140426005);
+	testEvent1.setExpireTS(1318226826005);
+	testEvent1.setPage('www.example.com');
+	cookieLog.push(testEvent1);
+
+	var testEvent2 = new CookieEvent(false, 'action', {
+			'domain': 'example.com',
+			'path': 'path',
+			'name': 'cookie2',
+			'value': 'value2',
+			'hostOnly': false,
+			'secure': false,
+			'httpOnly': false
+		});
+	testEvent2.setEventTS(1318140426015);
+	testEvent2.setPage('www.example.com');
+	cookieLog.push(testEvent2);
+
+
+	updateBadge();
+	console.log(cookieLog);
+});
+/* end-test-code */
 
 
 

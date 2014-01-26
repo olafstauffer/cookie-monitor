@@ -131,7 +131,8 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '.tmp/concat',
                     src: [
-                        'scripts/background.js'
+                        'scripts/background.js',
+                        'scripts/cookie-event.js'
                     ]
                 }]
             },

@@ -1,14 +1,15 @@
 {
     "name": "Cookie Monitor",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "manifest_version": 2,
-    "description": "Display, search, group, export, ... every cookie event in detail.",
+    "description": "Display, search, group, export, ... cookie events in detail.",
     "icons": {
         "128": "images/icon128x128.png"
     },
     "background": {
         "scripts": [
-            "scripts/background.js"
+            "scripts/background.js",
+            "scripts/cookie-event.js"
         ],
         "persistent": true
     },

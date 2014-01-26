@@ -29,7 +29,7 @@ Application.Controllers
 			'>' +
 			'&nbsp;'+
 			'</div>' +
-			'<div ng-class="{sessionCookie: row.getProperty(\'daysleft\') < 1}">' +
+			'<div ng-class="{sessionCookie: row.getProperty(\'lifespanInDays\') < 1}">' +
 			'<div ng-cell></div>' +
 			'</div></div>';
 
@@ -43,16 +43,16 @@ Application.Controllers
 		$scope.cookieTableConfig = {
 			data: 'cookieLog',
 			columnDefs: [
-				{field: 'ts', displayName: 'Time', cellFilter: 'date:"HH:mm:ss.sss"', width: 105, cellClass: 'visibleCell'},
+				{field: 'eventTS', displayName: 'Time', cellFilter: 'date:"HH:mm:ss.sss"', width: 105, cellClass: 'visibleCell'},
 				{field: 'name', displayName: 'Name', width:100, cellClass: 'visibleCell'},
 				{field: 'domain', displayName: 'Domain', width: 150, cellClass: 'visibleCell'},
 				{field: 'page', displayName: 'Page Guess', cellClass: 'visibleCell'},
 				{field: 'secure', displayName: 'HTTPS Only', width: 55, cellTemplate: boolCellTemplate, visible: true},
-				{field: 'httponly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate, visible: false},
-				{field: 'hostonly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate, visible: false},
-				{field: 'daysleft', displayName: 'Days Left', width: 50, cellClass: 'cookieTableCell visibleCell', visible: true}
+				{field: 'httpOnly', displayName: 'HTTP Only', width: 50, cellTemplate: boolCellTemplate, visible: false},
+				{field: 'hostOnly', displayName: 'Host Only', width: 50, cellTemplate: boolCellTemplate, visible: false},
+				{field: 'lifespanInDays', displayName: 'Days Left', width: 50, cellClass: 'cookieTableCell visibleCell', visible: true}
 			],
-			sortInfo: {fields: ['ts'], directions: ['desc']},
+			sortInfo: {fields: ['eventTS'], directions: ['desc']},
 			showGroupPanel: true,
 	        jqueryUIDraggable: true,
 	        enableColumnResize: true,
@@ -66,6 +66,8 @@ Application.Controllers
 
 		// fill table when popup is generated
 		cookieEventService.getCookieLog(function(cookieLog){
+			console.log('received cookie log:');
+			console.log(cookieLog);
 			$scope.cookieLog = cookieLog;
 			$scope.$apply();
 		});
@@ -73,7 +75,7 @@ Application.Controllers
 		// add a table row every time a cookie event is found 
 		/* jshint unused: false */
 		chrome.runtime.onMessage.addListener(function(msg, sender, callback){
-			console.log('popup received message:'+JSON.stringify(msg));
+			// console.log('popup received message:'+JSON.stringify(msg));
 			if ( msg.action && msg.action === 'add' ){
 				$scope.cookieLog.push(msg.event);
 				$scope.$apply();
@@ -104,7 +106,6 @@ Application.Controllers
 	    };
 
 		$scope.onMouseover = function(row){
-			// console.log(row.entity);
 			$scope.currentCookie = [ row.entity ];
 	    };
 
