@@ -1,6 +1,6 @@
 # Cookie Monitor
 
-Cookie Monitor collects and displays cookie events happening in the browser.
+_Cookie Monitor_ collects and displays cookie events.
 
 Features:
 
@@ -12,64 +12,68 @@ Features:
   * Export events to Elasticsearch
   * Csv filename and elasticsearch target configurable
 
-### Motivation
+## Motivation
 
-At the time I wrote this there existed a lot of tools handling cookies - either displaying, modifying or blocking them. But I did not find any focusing on the cookie event. How often is a cookie set? What different cookies are set on a website? Which domains are used?
+Cookies are a way to persist user information for a website or a part of a website (identified by domain and cookie name). Modern websites or web applications consist of various elements that often originate in different  domains (cdns, tracking codes, ad codes, ...). In theory every http response can carry a set cookie header and therefore generate a cookie event in the browser. 
 
-Cookie Monitor displays exactly those cookie event - every single one of them!
+This extension, _Cookie Monitor_, displays exactly those cookie events - every single one of them - making it easy to see what cookie is set for which domain and how often.
 
-For example try to navigate to one of the video streaming sites (e.g. netflix.com or watchever.de) or any other "heavy site" and have a look at the counter badge. Or try to find the site that tries to reach the immortal users by using expire dates on the cookies which are way beyond the life expectancy of a human being.  :-)
+For example try to navigate to one of the video streaming sites (e.g. netflix.com or watchever.de) or any other site loaded with content and have a look at the event counter. Or find the site that tries to reach the immortal users by using expire dates which are way beyond the life expectancy of a human being. :-)
 
-Those findings lead to the idea to hook this up to some tools specialized in analysing events ([elasticsearch](http://www.elasticsearch.org)). With this you can answer questions like the above or get infos on the sites to visited and how those site use cookies. You can even display those in nice dashboards like [kibana](http://www.elasticsearch.org/overview/kibana/) - imagine a dashboard displaying the top 10 sites with regards to "cookie events per minute". Hmm ... who would win here? ;-)
-
-
-
-Cookie Monitor to me is also a playground to experiment with browser extensions (opera/chrome style), the javascript toolchain (grunt, ...) and simply keeping in touch with developing trends.
+To analyse those cookie events even further _Cookie Monitor_ can forward every event to a [elasticsearch](http://www.elasticsearch.org) server. Imagine a [kibana](http://www.elasticsearch.org/overview/kibana/) dashboard displaying the top 10 sites with regards to "cookies set per second"! ... I wonder wo would win in this category? ;-)
 
 
-I developed this about half a year ago and its definitely not very pretty and looking at it now there are many things I would do differenty now. But it works and gives me a lot of insight into the way cookies are used on web pages. Therefore I decided to put this up. Maybe this is of some use for anybody else - even in the current state.
+There is definitely a lot to optimize with this extension, but it works and gives a lot of insight into the way cookies are used on web pages. Hopefully this is of some use for anybody - even in the current state.
 
 Have fun!  ;-)
 
+## Screenshots
 
-### Screenshots
-
-#### Main Display
-
-  * A tabular view of the cookie events ordered by the time they occured. 
-  * Change the sort order by selecting the column header.
-  * Buttons to clear or export all data. 
-  * Exports are automatically stored in download folder (see preferences).
-  * Mouseover details at the bottom of the window.
-  * Cookie events without any expiration or with a negative one are displayed in red.
-  * The badge above the extensions icon shows the total number of events.
+#### Main
 
 ![Main Display](./screenshots/screenshot-main.png "Main Display")
 
+Description:
+
+  * A tabular view of the cookie events ordered by the time they occured. 
+  * Change the sort order by selecting the column header.
+  * Button to clear all data.
+  * Button to export all data as csv file. (Exports are automatically stored in download folder).
+  * Mouseover event details at the bottom of the window.
+  * Cookie events without/with negative expiration are displayed in red.
+  * The extensions icon in the extension toolbar displays the current number of events.
+
 #### Selecting Events
 
-  * Bottons to export the selected events or clear the selection.
-  * Details for every selected event is display at the bottom.
-  * 
-![Selected Events](./screenshots/screenshot-selected.png "Selected Events")
+![Selecting Events](./screenshots/screenshot-selected.png "Selecting Events")
 
+Description:
+
+  * Bottons to export the selected events or clear the selection.
+  * Details for every selected event is displayed at the bottom.
+  
 #### Grouping Events
-  * Drag column header to table to to group by that column.
-  * Alternatively use the menu icon in the top right to group or change group order.
-  * Number of elements within is displayed at the end of the line.
+
+![Grouping Events](./screenshots/screenshot-drill-down.png "Grouping Events")
+
+Description:
+
+  * Drag column header to table to group by that column. (Or use the menu icon in the top right to group or change group order).
+  * Number of elements within a group is displayed at the end of the grouped value.
   * Drill Down to a event by opening/closing the groups.
   
-![Drill Down](./screenshots/screenshot-drill-down.png "Drill Down")
-
-
 #### Options
+
+![Options](./screenshots/screenshot-options.png "Options")
+
+Description:
+
   * _export all file prefix_ : use this as filename when exporting all events.
   * _export selected file prefix_ : use this as filename when exporting selected events.
   * _add timestamp suffix to the filename_ : use this if you want the export timestamp to be added to the filename.
   * _enable elasticsearch upload_ : activate the elasticsearch client.
   * _elasticsearch url_: URL to use when sending the json formatted event as http post.
   
-![Options](./screenshots/screenshot-options.png "Options")
 
 
 
@@ -139,7 +143,7 @@ to add some test cookies to the model to make (manual) testing easier.
 
 ### Internals
 
-Cookie Monitor is build around the _onChanged_ event of the [chrome cookies api](http://developer.chrome.com/extensions/cookies.html). This event does not provide a reference to the page that caused the event to happen. Cookie Monitor guesses the page by looking at the active browser tab when the event occures. If you need reliable information about the page source you must not use more than a single browser tab.
+_Cookie Monitor_ is build around the _onChanged_ event of the [chrome cookies api](http://developer.chrome.com/extensions/cookies.html). This event does not provide a reference to the page that caused the event to happen. _Cookie Monitor_ guesses the page by looking at the active browser tab when the event occures. If you need reliable information about the page source you must not use more than a single browser tab.
 
 To transport the event data to elasticsearch the data is simply converted into a json string and then send to the elasticsearch rest api. The mapping and the definition of a record id is done automatically by elasticsearch. 
 Use [this url](http://localhost:9200/browserdata/cookie/_search?pretty=1) to perform a simple elasticsearch query.
