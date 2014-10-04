@@ -221,6 +221,11 @@ module.exports = function (grunt) {
         'protractor:dist'
     ]);
 
+    grunt.registerTask('package', [
+        'chromeManifest',
+        'compress'
+    ]);
+
     grunt.registerTask('build', [
         'clean:dist',
         'bower-install',
@@ -234,14 +239,11 @@ module.exports = function (grunt) {
         'imagemin',
         'htmlmin',
         'usemin',
-        'copy:dist',
-        'chromeManifest',
-        'compress'
+        'copy:dist'
     ]);
 
     grunt.registerTask('default', [
         'jshint',
-        'build',
-        'protractor:dist'
+        'build'
     ]);
 };
