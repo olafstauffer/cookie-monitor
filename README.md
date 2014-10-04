@@ -141,6 +141,10 @@ to add some test cookies to the model to make (manual) testing easier.
 
 Cookie Monitor is build around the _onChanged_ event of the [chrome cookies api](http://developer.chrome.com/extensions/cookies.html). This event does not provide a reference to the page that caused the event to happen. Cookie Monitor guesses the page by looking at the active browser tab when the event occures. If you need reliable information about the page source you must not use more than a single browser tab.
 
+To transport the event data to elasticsearch the data is simply converted into a json string and then send to the elasticsearch rest api. The mapping and the definition of a record id is done automatically by elasticsearch. 
+Use [this url](http://localhost:9200/browserdata/cookie/_search?pretty=1) to perform a simple elasticsearch query.
+
+
 ### Icons used
 
 * Cookie Icon (Alessandro Rei - http://www.kde-look.org/usermanager/search.php?username=mentalrey)
