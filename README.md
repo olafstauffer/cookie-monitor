@@ -78,9 +78,9 @@ Description:
 
 
 
-### Usage
+### Install
 
-You need to have installed: _[npm](http://www.nodejs.org)_, _[bower](http://bower.io)_ and _[grunt](http://gruntjs.com)_.
+Prerequisites: _[npm](http://www.nodejs.org)_, _[bower](http://bower.io)_ and _[grunt](http://gruntjs.com)_.
 
     1. git clone https://github.com/olafstauffer/cookie-monitor.git 
     2. cd cookie-monitor 
