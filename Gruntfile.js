@@ -218,6 +218,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
+        'chromeManifest',
         'protractor:dist'
     ]);
 
