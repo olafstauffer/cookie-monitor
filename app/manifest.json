@@ -1,8 +1,8 @@
 {
     "name": "Cookie Monitor",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "manifest_version": 2,
-    "description": "Display, search, group, export, ... cookie events in detail.",
+    "description": "Display and analyse every single cookie event.",
     "icons": {
         "128": "images/icon128x128.png"
     },

@@ -105,7 +105,7 @@ module.exports = function (grunt) {
         },
         // Allow the use of non-minsafe AngularJS files. Automatically makes it
         // minsafe compatible so Uglify does not destroy the ng references
-        ngmin: {
+        ngAnnotate: {
             dist: {
                 files: [{
                     expand: true,
@@ -234,7 +234,7 @@ module.exports = function (grunt) {
         'concat',
         'copy:strip_code_prepare',
         'strip_code',
-        'ngmin',
+        'ngAnnotate',
         'uglify',
         'cssmin',
         'imagemin',
