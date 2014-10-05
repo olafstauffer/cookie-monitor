@@ -1,6 +1,6 @@
 'use strict';
 
-// CookieEvent
+// CookieEvent 1234
 // 
 // The base data structure for the extension. Here is defined what elements a cookie
 // event shoudl consist of and define the possible methods on a cookie event.
@@ -76,8 +76,9 @@ CookieEvent.prototype.toElasticSearch = function(){
 		result.expireTS = new Date(this.expireTS).toISOString();
 	}
 
+	var currentEvent = this;
 	['domain', 'path', 'action', 'name', 'value', 'page'].forEach(function(key){
-		result[key] = this[key];
+		result[key] = currentEvent[key];
 	});
 
 	result.hostonly = (this.hostonly === 'true');

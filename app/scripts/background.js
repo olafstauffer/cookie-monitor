@@ -27,7 +27,7 @@ function sendToElasticSearch(cookieEvent){
 		elasticsearchUrl = 'http://localhost:9200/browserdata/cookie'; // TODO: sync with config-server.js
 	}
 	console.log('url='+elasticsearchUrl);
-	// console.log('data='+toJSON(cookie));
+	console.log(cookieEvent.toElasticSearch());
 
 	var client = new XMLHttpRequest();
     client.open('POST', elasticsearchUrl, true);
