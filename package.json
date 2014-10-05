@@ -32,6 +32,7 @@
     "grunt-contrib-imagemin": "~0.4.0",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-uglify": "~0.2.7",
+    "grunt-crx": "^0.3.3",
     "grunt-ng-annotate": "^0.4.0",
     "grunt-protractor-runner": "~0.2.0",
     "grunt-strip-code": "~0.1.2",

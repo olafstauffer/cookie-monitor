@@ -23,6 +23,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         manifest: grunt.file.readJSON('app/manifest.json'),
+        pkg: grunt.file.readJSON('package.json'),
         yeoman: yeomanConfig,
         'bower-install': {
             app: {
@@ -103,6 +104,13 @@ module.exports = function (grunt) {
                 }]
             }
         },
+        concat: {
+            dist: {
+                src: ['<%= yeoman.app %>/scripts/cookie-event.js',
+                        '<%= yeoman.app %>/scripts/background.js'],
+                dest: '.tmp/concat/scripts/background.js'
+            }
+        },
         // Allow the use of non-minsafe AngularJS files. Automatically makes it
         // minsafe compatible so Uglify does not destroy the ng references
         ngAnnotate: {
@@ -142,7 +150,8 @@ module.exports = function (grunt) {
                     cwd: '.tmp/concat',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        'scripts/background.js'
+                        'scripts/background.js',
+                        'scripts/cookie-event.js'
                     ]
                 }]
             }
@@ -162,7 +171,7 @@ module.exports = function (grunt) {
         compress: {
             dist: {
                 options: {
-                    archive: 'package/cookie-monitor_v<%= manifest.version%>.zip'
+                    archive: 'packages/cookie-monitor_v<%= manifest.version%>.zip'
                 },
                 files: [{
                     expand: true,
@@ -214,6 +223,18 @@ module.exports = function (grunt) {
                 },
                 src: '.tmp/concat/scripts/*.js'
             }
+        },
+        crx: {
+            production: {
+                'src': '<%= yeoman.dist %>',
+                'dest': 'packages/<%= pkg.name %>-v<%= manifest.version %>.crx',
+                'baseURL': 'https://github.com/olafstauffer/cookie-monitor/packages',
+                'exclude': ['.git', '*.pem'],
+                'privateKey': 'keys/id_rsa_cookie-monitor.pem',
+                'options': {
+                    'maxBuffer': 3000 * 1024
+                }
+            }
         }
     });
 
@@ -223,15 +244,29 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('package', [
+        'clean:dist',
+        'bower-install',
+        'useminPrepare',
+        'concat:generated',
+        'concat:dist',
+        'strip_code',
+        'ngAnnotate',
+        'uglify',
+        'cssmin',
+        'imagemin',
+        'htmlmin',
+        'usemin',
+        'copy:dist',
         'chromeManifest',
-        'compress'
+        'crx'
     ]);
 
+        
     grunt.registerTask('build', [
         'clean:dist',
         'bower-install',
         'useminPrepare',
-        'concat',
+        'concat:generated',
         'copy:strip_code_prepare',
         'strip_code',
         'ngAnnotate',

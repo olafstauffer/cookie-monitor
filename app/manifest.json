@@ -3,13 +3,15 @@
     "version": "0.5.1",
     "manifest_version": 2,
     "description": "Display and analyse every single cookie event.",
+    "developer": "Olaf Stauffer <olaf.stauffer@web.de>",
+    "homepage_url": "https://github.com/olafstauffer/cookie-monitor",
     "icons": {
         "128": "images/icon128x128.png"
     },
     "background": {
         "scripts": [
-            "scripts/background.js",
-            "scripts/cookie-event.js"
+            "scripts/cookie-event.js",
+            "scripts/background.js"
         ],
         "persistent": true
     },
